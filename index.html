@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>كعكة الصمدي | اطلب واتساب</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#fff7f0;--card:#fff;--ink:#1f130b;--muted:#8a7a6e;--orange:#f97316;--orange-dark:#ea580c;--orange-soft:#fff1e6;--border:#ffe4d1;--green:#16a34a;--green-dark:#15803d;--shadow:0 6px 20px rgba(249,115,22,.08)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;padding-bottom:120px}
+a{text-decoration:none}
+button{font-family:inherit}
+.topbar{background:#fff;border-bottom:1px solid var(--border);position:sticky;top:0;z-index:30}
+.topbar-inner{max-width:1000px;margin:0 auto;padding:10px 16px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.logo{display:flex;align-items:center;gap:10px}
+.logo-mark{width:40px;height:40px;background:var(--orange);color:#fff;border-radius:12px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:20px;box-shadow:0 4px 12px rgba(249,115,22,.3)}
+.logo b{font-size:17px;line-height:1}
+.logo span{display:block;font-size:11px;color:var(--muted);font-weight:700}
+.top-actions{display:flex;gap:8px}
+.btn-top{padding:8px 14px;border-radius:999px;font-size:13px;font-weight:800}
+.btn-call{background:#1f130b;color:#fff}
+.btn-wa{background:var(--green);color:#fff}
+.hero{max-width:1000px;margin:0 auto;padding:20px 16px 8px;text-align:center}
+.hero-badge{display:inline-block;background:#fff;border:1px solid var(--border);color:var(--orange-dark);padding:5px 12px;border-radius:999px;font-size:12px;font-weight:800}
+.hero h1{font-size:32px;font-weight:900;margin:10px 0 4px}
+.hero h1 em{color:var(--orange);font-style:normal}
+.hero p{color:var(--muted);font-size:14px;font-weight:600}
+.hero-stats{display:flex;justify-content:center;gap:8px;margin-top:12px;flex-wrap:wrap}
+.stat{background:#fff;border:1px solid var(--border);border-radius:12px;padding:8px 14px;font-size:12.5px;font-weight:800}
+.stat b{color:var(--orange)}
+.container{max-width:1000px;margin:0 auto;padding:0 16px}
+.main-tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:16px 0 12px}
+.main-tab{background:#fff;border:2px solid var(--border);border-radius:18px;padding:14px 8px;text-align:center;cursor:pointer;transition:.2s}
+.main-tab small{display:block;font-size:11px;color:var(--muted);font-weight:700;margin-top:2px}
+.main-tab strong{font-size:14.5px}
+.main-tab.active{background:var(--orange);border-color:var(--orange);color:#fff;box-shadow:0 8px 20px rgba(249,115,22,.28)}
+.main-tab.active small{color:#ffe8d6}
+.controls{background:#fff;border:1px solid var(--border);border-radius:20px;padding:12px;box-shadow:var(--shadow);position:sticky;top:60px;z-index:20}
+.search-wrap{position:relative}
+.search-wrap input{width:100%;padding:12px 14px 12px 42px;border:1.5px solid var(--border);border-radius:14px;background:#fffaf6;font-size:14px;outline:none}
+.search-wrap input:focus{border-color:var(--orange);background:#fff}
+.search-icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:16px;opacity:.6}
+.sub-tabs{display:flex;gap:8px;overflow-x:auto;padding-top:10px;scrollbar-width:none}
+.sub-tabs::-webkit-scrollbar{display:none}
+.sub-tab{flex:0 0 auto;padding:7px 14px;border-radius:999px;border:1px solid var(--border);background:#fff7f0;font-size:12.5px;font-weight:800;cursor:pointer}
+.sub-tab.active{background:#1f130b;color:#fff;border-color:#1f130b}
+.sub-tab .count{background:#fff;color:#1f130b;border-radius:999px;padding:0 6px;margin-right:4px;font-size:11px}
+.sub-tab.active .count{background:var(--orange);color:#fff}
+#menuContent{margin-top:18px}
+.section{margin-bottom:22px}
+.section-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.section-title{font-size:18px;font-weight:900;display:flex;align-items:center;gap:9px}
+.section-title:before{content:"";width:6px;height:22px;background:var(--orange);border-radius:99px;display:inline-block}
+.section-count{font-size:12px;background:var(--orange-soft);color:var(--orange-dark);padding:3px 9px;border-radius:999px;font-weight:800}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+@media(max-width:640px){.grid{grid-template-columns:1fr}.hero h1{font-size:26px}.main-tab strong{font-size:12.5px}}
+.card{background:#fff;border:1px solid var(--border);border-radius:16px;padding:12px 14px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.card:hover{border-color:#fdba74}
+.item-left{flex:1}
+.item-name{font-weight:800;font-size:14.5px}
+.item-cat{font-size:11px;color:var(--muted);font-weight:700}
+.tag{display:inline-block;font-size:10.5px;font-weight:900;padding:2px 7px;border-radius:999px;margin-right:6px}
+.tag-double{background:#fff1e6;color:#c2410c;border:1px solid #fed7aa}
+.tag-extra{background:#fef2f2;color:#b91c1c;border:1px solid #fecaca}
+.item-right{display:flex;align-items:center;gap:8px}
+.price{background:var(--orange-soft);color:#9a3412;font-weight:900;font-size:13.5px;padding:6px 9px;border-radius:11px;white-space:nowrap}
+.price small{font-size:11px;font-weight:700;color:#c2410c}
+.add-btn{width:36px;height:36px;border-radius:50%;border:none;background:var(--orange);color:#fff;font-size:20px;font-weight:900;cursor:pointer;box-shadow:0 4px 10px rgba(249,115,22,.3);flex:0 0 36px}
+.add-btn:active{transform:scale(.92)}
+.qty-ctrl{display:flex;align-items:center;gap:6px;background:#fff7f0;border:1px solid var(--border);border-radius:999px;padding:2px}
+.qty-ctrl button{width:28px;height:28px;border-radius:50%;border:none;background:#fff;font-weight:900;cursor:pointer;font-size:16px;box-shadow:0 1px 4px rgba(0,0,0,.08)}
+.qty-ctrl button.plus{background:var(--orange);color:#fff}
+.qty-num{font-weight:900;font-size:14px;min-width:18px;text-align:center}
+.branch{background:#fff;border:1px solid var(--border);border-radius:20px;padding:18px;margin-top:8px;box-shadow:var(--shadow)}
+.branch h2{font-size:18px;font-weight:900;margin-bottom:6px}
+.branch p{color:var(--muted);font-size:13.5px;font-weight:600;margin-bottom:14px}
+.branch-row{display:flex;gap:10px;flex-wrap:wrap}
+.branch-row a{flex:1;min-width:140px;text-align:center;padding:11px;border-radius:13px;font-weight:800;font-size:14px}
+.b-call{background:#1f130b;color:#fff}
+.b-wa{background:var(--green);color:#fff}
+.empty{text-align:center;padding:40px 16px;color:var(--muted);font-weight:800;background:#fff;border:1px dashed var(--border);border-radius:16px}
+.footer{text-align:center;color:var(--muted);font-size:12px;font-weight:700;margin-top:20px}
+/* CART BAR */
+.cart-bar{position:fixed;bottom:0;left:0;right:0;z-index:40;background:#fff;border-top:1px solid var(--border);box-shadow:0 -6px 20px rgba(0,0,0,.06);padding:10px 12px}
+.cart-bar-inner{max-width:1000px;margin:0 auto;display:flex;gap:10px;align-items:center}
+.cart-info{flex:1}
+.cart-info b{font-size:14px}
+.cart-info span{display:block;font-size:12px;color:var(--muted);font-weight:700}
+.cart-btn{border:none;cursor:pointer;padding:11px 16px;border-radius:12px;font-weight:900;font-size:14px}
+.cart-view{background:#1f130b;color:#fff}
+.cart-send{background:var(--green);color:#fff}
+.cart-empty-bar{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.cart-empty-bar span{font-weight:800;font-size:13.5px}
+.cart-empty-bar a{background:var(--green);color:#fff;padding:9px 14px;border-radius:999px;font-weight:800;font-size:13px}
+/* MODAL */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:50;display:none;align-items:flex-end;justify-content:center}
+.overlay.open{display:flex}
+.sheet{background:#fff;width:100%;max-width:560px;max-height:88vh;overflow:auto;border-radius:22px 22px 0 0;padding:18px 16px 22px}
+.sheet-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.sheet-head h3{font-size:18px;font-weight:900}
+.close-btn{width:32px;height:32px;border-radius:50%;border:1px solid var(--border);background:#fff;cursor:pointer;font-size:16px}
+.cart-item{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 0;border-bottom:1px solid #fef0e5}
+.cart-item b{font-size:14px}
+.cart-item small{display:block;color:var(--muted);font-size:11.5px;font-weight:700}
+.cart-item-price{font-weight:900;color:#9a3412;font-size:13.5px;white-space:nowrap}
+.inputs{margin-top:14px;display:grid;gap:10px}
+.inputs label{font-size:12.5px;font-weight:800;color:#444}
+.inputs input,.inputs textarea{width:100%;padding:11px 12px;border:1.5px solid var(--border);border-radius:12px;font-family:inherit;font-size:14px;outline:none;margin-top:4px}
+.inputs input:focus,.inputs textarea:focus{border-color:var(--orange)}
+.total-row{display:flex;justify-content:space-between;align-items:center;background:var(--orange-soft);border:1px solid #fed7aa;padding:12px 14px;border-radius:14px;margin-top:14px;font-weight:900}
+.total-row span:last-child{font-size:18px;color:#9a3412}
+.send-wa{width:100%;margin-top:12px;background:var(--green);color:#fff;border:none;padding:14px;border-radius:14px;font-size:15px;font-weight:900;cursor:pointer}
+.clear-btn{width:100%;margin-top:8px;background:#fff;border:1px solid var(--border);padding:10px;border-radius:12px;font-weight:800;cursor:pointer;color:#666}
+.hint{font-size:12px;color:var(--muted);font-weight:700;text-align:center;margin-top:8px}
+</style>
+</head>
+<body>
+
+<div class="topbar"><div class="topbar-inner">
+  <div class="logo"><div class="logo-mark">ك</div><div><b>كعكة الصمدي</b><span>اطلب دغري واتساب • فرع واحد</span></div></div>
+  <div class="top-actions"><a class="btn-top btn-call" href="tel:79111754">اتصال</a><a class="btn-top btn-wa" href="https://wa.me/96179111754?text=مرحبا%20كعكة%20الصمدي%20بدي%20اطلب">واتساب</a></div>
+</div></div>
+
+<div class="hero">
+  <span class="hero-badge">نقّي الأصناف • كبوس + • وابعت الطلبية واتساب</span>
+  <h1>كعكة <em>الصمدي</em></h1>
+  <p>كعكة العصرونية • كعكة الطرابلسية • مناقيش مشروحين</p>
+  <div class="hero-stats"><div class="stat"><b>3</b> قوائم</div><div class="stat">اطلب بـ <b>واتساب</b> دغري</div><div class="stat">التوصيل <b>سريع</b></div></div>
+</div>
+
+<main class="container">
+  <div class="main-tabs" id="mainTabs">
+    <button class="main-tab active" data-menu="asroneyeh"><strong>كعكة العصرونية</strong><small>القائمة الأولى</small></button>
+    <button class="main-tab" data-menu="trablousieh"><strong>كعكة الطرابلسية</strong><small>القائمة الثانية</small></button>
+    <button class="main-tab" data-menu="mashrouhin"><strong>مناقيش مشروحين</strong><small>القائمة الثالثة</small></button>
+  </div>
+
+  <div class="controls">
+    <div class="search-wrap"><span class="search-icon">🔍</span><input id="searchInput" type="search" placeholder="ابحث عن صنف... عكاوي، نوتيلا، سجق، زعتر"></div>
+    <div class="sub-tabs" id="subTabs"></div>
+  </div>
+
+  <div id="menuContent"></div>
+
+  <section class="branch">
+    <h2>الفرع ورقم التلفون</h2>
+    <p>فرع واحد • للطلب اتصل أو واتساب، ونحنا منجهزلك طلبك.</p>
+    <div class="branch-row">
+      <a class="b-call" href="tel:79111754">📞 اتصال: 79 111 754</a>
+      <a class="b-wa" href="https://wa.me/96179111754?text=مرحبا%20كعكة%20الصمدي%20بدي%20اطلب">💬 واتساب للطلب</a>
+    </div>
+  </section>
+  <div class="footer">كعكة الصمدي © 2026 • الأسعار بالليرة اللبنانية</div>
+</main>
+
+<!-- CART BAR -->
+<div class="cart-bar" id="cartBar">
+  <div class="cart-bar-inner" id="cartBarInner"></div>
+</div>
+
+<!-- CART SHEET -->
+<div class="overlay" id="overlay">
+  <div class="sheet">
+    <div class="sheet-head"><h3>🛒 طلبيتك</h3><button class="close-btn" onclick="closeCart()">✕</button></div>
+    <div id="cartList"></div>
+    <div class="inputs">
+      <div><label>اسمك (اختياري)</label><input id="custName" placeholder="مثلاً: أسامة"></div>
+      <div><label>ملاحظة للطلبية (اختياري)</label><textarea id="custNote" rows="2" placeholder="مثلاً: بدون بصل، العنوان..."></textarea></div>
+    </div>
+    <div class="total-row"><span>المجموع</span><span id="cartTotal">0 ل.ل.</span></div>
+    <button class="send-wa" onclick="sendWhatsApp()">💬 إرسال الطلبية واتساب</button>
+    <button class="clear-btn" onclick="clearCart()">مسح الطلبية</button>
+    <div class="hint">لما تكبس إرسال، بيفتح واتساب والطلبية جاهزة مكتوبة، بس كبوس Send</div>
+  </div>
+</div>
+
+<script>
+const STORE={currency:"ل.ل.",phone:"79111754",whatsapp:"96179111754"};
+const MENU_DATA={
+asroneyeh:{label:"كعكة العصرونية",categories:[
+{name:"الكلاسيك",items:[{name:"كعكة سادة",price:"100,000"},{name:"زعتر وزيت",price:"260,000"},{name:"بندورة وبصل",price:"360,000"},{name:"بندورة وبصل وجبنة",price:"460,000"}]},
+{name:"اللبنة",items:[{name:"لبنة وزيتون",price:"310,000"},{name:"لبنة ومكدوس",price:"360,000"},{name:"لبنة ومرتديلا",price:"510,000"}]},
+{name:"الأجبان",items:[{name:"عكاوي",price:"440,000"},{name:"عكاوي",tag:"دوبل",tagType:"double",price:"560,000"},{name:"حلوم",price:"460,000"},{name:"حلوم",tag:"دوبل",tagType:"double",price:"560,000"},{name:"قشقوان",price:"490,000"},{name:"قشقوان",tag:"دوبل",tagType:"double",price:"610,000"},{name:"بيكون",price:"410,000"},{name:"بيكون",tag:"دوبل",tagType:"double",price:"510,000"},{name:"فيتا",price:"410,000"},{name:"بلغاري",price:"410,000"},{name:"شلل وزبدة",price:"440,000"}]},
+{name:"مكس أجبان",items:[{name:"عكاوي وبيكون",price:"610,000"},{name:"بيكون وحلوم",price:"610,000"},{name:"عكاوي وحلوم",price:"660,000"},{name:"بيكون وقشقوان",price:"660,000"},{name:"عكاوي وقشقوان",price:"710,000"},{name:"شلل وعكاوي",price:"710,000"},{name:"شلل وقشقوان",price:"710,000"},{name:"فيتا وقشقوان",price:"710,000"},{name:"بلغاري وقشقوان",price:"710,000"},{name:"عكاوي وحلوم وقشقوان",price:"810,000"},{name:"عكاوي وبيكون وقشقوان",price:"810,000"},{name:"عكاوي وبيكون وحلوم وقشقوان",price:"860,000"},{name:"عكاوي وقشقوان وموزريلا وتشدر",price:"890,000"}]},
+{name:"المرتديلا",items:[{name:"مرتديلا",price:"460,000"},{name:"مرتديلا وبيكون",price:"660,000"},{name:"مرتديلا وحلوم",price:"660,000"},{name:"مرتديلا وعكاوي",price:"660,000"},{name:"مرتديلا وقشقوان",price:"680,000"}]},
+{name:"لحوم ودجاج",items:[{name:"سجق وقشقوان",price:"610,000"},{name:"فاهيتا وقشقوان",price:"610,000"},{name:"طاووق وقشقوان",price:"610,000"},{name:"تشدر هوت دوغ",price:"660,000"},{name:"حبش وقشقوان",price:"710,000"}]},
+{name:"كعكة بيتزا",items:[{name:"خضرا",price:"560,000"},{name:"مرتديلا",price:"710,000"},{name:"سجق",price:"710,000"},{name:"بيبروني",price:"710,000"},{name:"تشدر هوت دوغ",price:"710,000"},{name:"حبش",price:"760,000"},{name:"دجاج باربكيو",price:"760,000"}]},
+{name:"الصحون",items:[{name:"خضرا",price:"160,000"},{name:"لبنة وزيتون وحر",price:"310,000"},{name:"لبنة ومكدوس",price:"360,000"},{name:"لبنة",tag:"إكسترا",tagType:"extra",price:"360,000"},{name:"مشكل",price:"660,000"},{name:"مشكل",tag:"إكسترا",tagType:"extra",price:"860,000"}]},
+{name:"الحلو",items:[{name:"نوتيلا",price:"460,000"},{name:"نوتيلا وموز",price:"510,000"},{name:"نوتيلا",tag:"إكسترا",tagType:"extra",price:"560,000"}]}
+]},
+trablousieh:{label:"كعكة الطرابلسية",categories:[
+{name:"الكلاسيك",items:[{name:"كعكة سادة",price:"30,000"},{name:"زعتر وزيت",price:"100,000"},{name:"بندورة وبصل",price:"150,000"},{name:"بندورة وبصل وجبنة",price:"250,000"}]},
+{name:"اللبنة",items:[{name:"لبنة وزيتون",price:"130,000"},{name:"لبنة ومكدوس",price:"160,000"},{name:"لبنة ومرتديلا",price:"250,000"}]},
+{name:"الأجبان",items:[{name:"عكاوي",price:"190,000"},{name:"عكاوي",tag:"دوبل",tagType:"double",price:"250,000"},{name:"حلوم",price:"200,000"},{name:"حلوم",tag:"دوبل",tagType:"double",price:"250,000"},{name:"قشقوان",price:"230,000"},{name:"قشقوان",tag:"دوبل",tagType:"double",price:"280,000"},{name:"بيكون",price:"180,000"},{name:"بيكون",tag:"دوبل",tagType:"double",price:"230,000"},{name:"فيتا",price:"160,000"},{name:"بلغاري",price:"160,000"},{name:"شلل وزبدة",price:"200,000"}]},
+{name:"مكس أجبان",items:[{name:"عكاوي وبيكون",price:"280,000"},{name:"بيكون وحلوم",price:"280,000"},{name:"عكاوي وحلوم",price:"280,000"},{name:"بيكون وقشقوان",price:"300,000"},{name:"شلل وعكاوي",price:"300,000"},{name:"عكاوي وقشقوان",price:"330,000"},{name:"شلل وقشقوان",price:"330,000"},{name:"فيتا وقشقوان",price:"330,000"},{name:"بلغاري وقشقوان",price:"330,000"},{name:"عكاوي وحلوم وقشقوان",price:"350,000"},{name:"عكاوي وبيكون وقشقوان",price:"350,000"},{name:"عكاوي وبيكون وحلوم وقشقوان",price:"400,000"}]},
+{name:"المرتديلا",items:[{name:"مرتديلا",price:"200,000"},{name:"مرتديلا وبيكون",price:"300,000"},{name:"مرتديلا وحلوم",price:"300,000"},{name:"مرتديلا وعكاوي",price:"300,000"},{name:"مرتديلا وقشقوان",price:"300,000"}]},
+{name:"لحوم ودجاج",items:[{name:"سجق وقشقوان",price:"300,000"},{name:"فاهيتا وقشقوان",price:"300,000"},{name:"طاووق وقشقوان",price:"300,000"},{name:"حبش وقشقوان",price:"330,000"}]},
+{name:"كعكة بيتزا",items:[{name:"خضرا",price:"250,000"},{name:"مرتديلا",price:"330,000"},{name:"سجق",price:"330,000"},{name:"بيبروني",price:"330,000"},{name:"حبش",price:"350,000"},{name:"دجاج باربكيو",price:"350,000"}]},
+{name:"الحلو",items:[{name:"نوتيلا",price:"200,000"},{name:"نوتيلا وموز",price:"230,000"},{name:"نوتيلا",tag:"إكسترا",tagType:"extra",price:"250,000"}]}
+]},
+mashrouhin:{label:"مناقيش مشروحين",categories:[
+{name:"الكلاسيك",items:[{name:"زعتر",price:"100,000"},{name:"زعتر مع خضرا",price:"120,000"},{name:"بندورة وبصل",price:"250,000"},{name:"بندورة وبصل وجبنة",price:"300,000"}]},
+{name:"اللبنة",items:[{name:"لبنة وزيتون",price:"200,000"},{name:"لبنة ومكدوس",price:"250,000"}]},
+{name:"الأجبان",items:[{name:"عكاوي",price:"250,000"},{name:"عكاوي",tag:"دوبل",tagType:"double",price:"380,000"},{name:"حلوم",price:"300,000"},{name:"حلوم",tag:"دوبل",tagType:"double",price:"380,000"},{name:"قشقوان",price:"350,000"},{name:"قشقوان",tag:"دوبل",tagType:"double",price:"420,000"},{name:"بيكون",price:"300,000"},{name:"بيكون",tag:"دوبل",tagType:"double",price:"400,000"},{name:"فيتا",price:"250,000"},{name:"بلغاري",price:"250,000"},{name:"شلل",price:"330,000"}]},
+{name:"مكس أجبان",items:[{name:"كوكتيل طبقتين",price:"330,000"},{name:"عكاوي وبيكون",price:"400,000"},{name:"بيكون وحلوم",price:"400,000"},{name:"عكاوي وحلوم",price:"400,000"},{name:"بيكون وقشقوان",price:"420,000"},{name:"عكاوي وقشقوان",price:"420,000"},{name:"شلل وقشقوان",price:"420,000"},{name:"فيتا وقشقوان",price:"420,000"},{name:"بلغاري وقشقوان",price:"420,000"},{name:"عكاوي وحلوم وقشقوان",price:"500,000"},{name:"عكاوي وبيكون وقشقوان",price:"500,000"},{name:"4 أجبان",price:"600,000"},{name:"عكاوي وقشقوان وموزريلا وتشدر",price:"700,000"}]},
+{name:"المرتديلا",items:[{name:"مرتديلا",price:"350,000"},{name:"مرتديلا وبيكون",price:"420,000"},{name:"مرتديلا وحلوم",price:"420,000"},{name:"مرتديلا وعكاوي",price:"450,000"},{name:"مرتديلا وقشقوان",price:"470,000"}]},
+{name:"لحوم ودجاج",items:[{name:"سجق وقشقوان",price:"420,000"},{name:"فاهيتا وقشقوان",price:"420,000"},{name:"طاووق وقشقوان",price:"420,000"},{name:"تشدر هوت دوغ",price:"450,000"},{name:"حبش وقشقوان",price:"470,000"}]},
+{name:"كعكة بيتزا",items:[{name:"خضرا",price:"400,000"},{name:"مرتديلا",price:"500,000"},{name:"سجق",price:"500,000"},{name:"بيبروني",price:"500,000"},{name:"حبش",price:"520,000"},{name:"دجاج باربكيو",price:"520,000"}]},
+{name:"الحلو",items:[{name:"نوتيلا",price:"300,000"},{name:"نوتيلا وموز",price:"350,000"},{name:"نوتيلا",tag:"إكسترا",tagType:"extra",price:"400,000"}]}
+]}
+};
+
+let currentMenu='asroneyeh', currentSub='الكل', searchQuery='';
+let cart={};
+const menuContent=document.getElementById('menuContent'), subTabsEl=document.getElementById('subTabs'), searchInput=document.getElementById('searchInput');
+function parsePrice(s){return parseInt(s.replace(/,/g,''))||0}
+function fmt(n){return n.toLocaleString('en-US')}
+function tagClass(t){return t==='double'?'tag-double':'tag-extra'}
+function cartKey(menu,cat,it){return menu+'|'+cat+'|'+it.name+'|'+(it.tag||'')+'|'+it.price}
+function cartCount(){return Object.values(cart).reduce((a,c)=>a+c.qty,0)}
+function cartTotal(){return Object.values(cart).reduce((a,c)=>a+c.qty*parsePrice(c.price),0)}
+
+function renderSubTabs(){
+  const cats=MENU_DATA[currentMenu].categories;
+  let html=`<button class="sub-tab ${currentSub==='الكل'?'active':''}" data-sub="الكل">الكل</button>`;
+  html+=cats.map(c=>`<button class="sub-tab ${currentSub===c.name?'active':''}" data-sub="${c.name}">${c.name} <span class="count">${c.items.length}</span></button>`).join('');
+  subTabsEl.innerHTML=html;
+  subTabsEl.querySelectorAll('.sub-tab').forEach(b=>b.addEventListener('click',()=>{currentSub=b.dataset.sub;renderSubTabs();renderMenu()}));
+}
+
+function renderMenu(){
+  const data=MENU_DATA[currentMenu];
+  const q=searchQuery.trim();
+  let cats=data.categories;
+  if(currentSub!=='الكل') cats=cats.filter(c=>c.name===currentSub);
+  let html='', found=false;
+  cats.forEach(cat=>{
+    let items=cat.items;
+    if(q) items=items.filter(it=>(it.name+' '+(it.tag||'')).includes(q));
+    if(!items.length) return; found=true;
+    html+=`<div class="section"><div class="section-head"><div class="section-title">${cat.name}</div><div class="section-count">${items.length} أصناف</div></div><div class="grid">`;
+    html+=items.map(it=>{
+      const key=cartKey(currentMenu,cat.name,it);
+      const qty=cart[key]?cart[key].qty:0;
+      const tag=it.tag?`<span class="tag ${tagClass(it.tagType)}">${it.tag}</span>`:'';
+      const ctrl = qty===0
+        ? `<button class="add-btn" onclick="addItem('${currentMenu}','${cat.name}','${it.name}','${it.tag||''}','${it.price}')">+</button>`
+        : `<div class="qty-ctrl"><button onclick="changeQty('${key}',-1)">−</button><span class="qty-num">${qty}</span><button class="plus" onclick="changeQty('${key}',1)">+</button></div>`;
+      return `<div class="card"><div class="item-left"><div class="item-name">${tag}${it.name}</div><div class="item-cat">${data.label} • ${cat.name}</div></div><div class="item-right"><div class="price">${it.price} <small>ل.ل.</small></div>${ctrl}</div></div>`;
+    }).join('');
+    html+=`</div></div>`;
+  });
+  if(!found) html='<div class="empty">ما لقينا صنف بهالاسم، جرّب كلمة تانية</div>';
+  menuContent.innerHTML=html;
+}
+
+function addItem(menu,cat,name,tag,price){
+  const key=menu+'|'+cat+'|'+name+'|'+tag+'|'+price;
+  if(!cart[key]) cart[key]={menu,cat,name,tag,price,qty:0};
+  cart[key].qty++;
+  renderMenu(); renderCartBar();
+}
+function changeQty(key,delta){
+  if(!cart[key]) return;
+  cart[key].qty+=delta;
+  if(cart[key].qty<=0) delete cart[key];
+  renderMenu(); renderCartBar(); renderCartList();
+}
+function clearCart(){ cart={}; renderMenu(); renderCartBar(); renderCartList(); }
+
+function renderCartBar(){
+  const bar=document.getElementById('cartBarInner');
+  const count=cartCount(), total=cartTotal();
+  if(count===0){
+    bar.innerHTML=`<div class="cart-empty-bar" style="width:100%"><span>نقّي من المنيو وكبوس + لتضيف على الطلبية</span><a href="https://wa.me/96179111754?text=مرحبا%20كعكة%20الصمدي%20بدي%20اطلب">واتساب دغري</a></div>`;
+  } else {
+    bar.innerHTML=`<div class="cart-info"><b>🛒 ${count} أصناف بالطلبية</b><span>المجموع: ${fmt(total)} ل.ل.</span></div><button class="cart-btn cart-view" onclick="openCart()">شوف الطلبية</button><button class="cart-btn cart-send" onclick="sendWhatsApp()">إرسال واتساب</button>`;
+  }
+}
+function renderCartList(){
+  const list=document.getElementById('cartList');
+  const total=document.getElementById('cartTotal');
+  if(Object.keys(cart).length===0){ list.innerHTML='<div class="empty">الطلبية فاضية، ضيف أصناف من المنيو</div>'; }
+  else {
+    list.innerHTML=Object.entries(cart).map(([key,c])=>{
+      const lineTotal=parsePrice(c.price)*c.qty;
+      return `<div class="cart-item"><div><b>${c.qty} × ${c.name} ${c.tag?`(${c.tag})`:''}</b><small>${MENU_DATA[c.menu].label} • ${c.cat} • ${c.price} ل.ل. للحبة</small></div><div style="display:flex;align-items:center;gap:10px"><div class="cart-item-price">${fmt(lineTotal)} ل.ل.</div><div class="qty-ctrl"><button onclick="changeQty('${key}',-1)">−</button><span class="qty-num">${c.qty}</span><button class="plus" onclick="changeQty('${key}',1)">+</button></div></div></div>`;
+    }).join('');
+  }
+  total.textContent=fmt(cartTotal())+' ل.ل.';
+}
+function openCart(){ renderCartList(); document.getElementById('overlay').classList.add('open'); }
+function closeCart(){ document.getElementById('overlay').classList.remove('open'); }
+document.getElementById('overlay').addEventListener('click',e=>{ if(e.target.id==='overlay') closeCart(); });
+
+function sendWhatsApp(){
+  if(cartCount()===0){ alert('الطلبية فاضية، ضيف صنف بالأول'); return; }
+  const name=document.getElementById('custName').value.trim();
+  const note=document.getElementById('custNote').value.trim();
+  let msg='مرحبا كعكة الصمدي 👋\nبدي اطلب:\n\n';
+  Object.values(cart).forEach(c=>{
+    const lineTotal=parsePrice(c.price)*c.qty;
+    msg+=`• ${c.qty} × ${c.name}${c.tag?` (${c.tag})`:''} - ${fmt(lineTotal)} ل.ل.\n   (${MENU_DATA[c.menu].label} - ${c.cat})\n`;
+  });
+  msg+=`\n----------------\nالمجموع: ${fmt(cartTotal())} ل.ل.`;
+  if(name) msg+=`\nالاسم: ${name}`;
+  if(note) msg+=`\nملاحظة: ${note}`;
+  msg+=`\n\nشكراً!`;
+  const url='https://wa.me/'+STORE.whatsapp+'?text='+encodeURIComponent(msg);
+  window.open(url,'_blank');
+}
+
+document.querySelectorAll('.main-tab').forEach(btn=>btn.addEventListener('click',()=>{
+  document.querySelectorAll('.main-tab').forEach(b=>b.classList.remove('active')); btn.classList.add('active');
+  currentMenu=btn.dataset.menu; currentSub='الكل'; searchInput.value=''; searchQuery='';
+  renderSubTabs(); renderMenu(); window.scrollTo({top:0,behavior:'smooth'});
+}));
+searchInput.addEventListener('input',e=>{searchQuery=e.target.value; renderMenu()});
+renderSubTabs(); renderMenu(); renderCartBar();
+</script>
+</body>
+</html>
