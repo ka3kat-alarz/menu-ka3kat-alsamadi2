@@ -32,7 +32,7 @@ button{font-family:inherit}
 .stat{background:#fff;border:1px solid var(--border);border-radius:12px;padding:8px 14px;font-size:12.5px;font-weight:800}
 .stat b{color:var(--orange)}
 .container{max-width:1000px;margin:0 auto;padding:0 16px}
-.main-tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:16px 0 12px}
+.main-tabs{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:16px 0 12px}
 .main-tab{background:#fff;border:2px solid var(--border);border-radius:18px;padding:14px 8px;text-align:center;cursor:pointer;transition:.2s}
 .main-tab small{display:block;font-size:11px;color:var(--muted);font-weight:700;margin-top:2px}
 .main-tab strong{font-size:14.5px}
@@ -57,7 +57,7 @@ button{font-family:inherit}
 .section-count{font-size:12px;background:var(--orange-soft);color:var(--orange-dark);padding:3px 9px;border-radius:999px;font-weight:800}
 .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
 @media(max-width:640px){.grid{grid-template-columns:1fr}.hero h1{font-size:26px}.main-tab strong{font-size:12.5px}}
-.card{background:#fff;border:1px solid var(--border);border-radius:16px;padding:12px 14px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.card{background:#fff;border:1px solid var(--border);border-radius:16px;padding:12px 14px;display:flex;align-items:center;justify-content:space-between;gap:10px}.card-has-img{flex-direction:column;align-items:stretch;padding:0;overflow:hidden}.card-has-img .card-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 14px}.item-img{width:100%;height:140px;object-fit:cover;display:block;background:#fff7f0}
 .card:hover{border-color:#fdba74}
 .item-left{flex:1}
 .item-name{font-weight:800;font-size:14.5px}
@@ -78,6 +78,14 @@ button{font-family:inherit}
 .branch h2{font-size:18px;font-weight:900;margin-bottom:6px}
 .branch p{color:var(--muted);font-size:13.5px;font-weight:600;margin-bottom:14px}
 .branch-row{display:flex;gap:10px;flex-wrap:wrap}
+.branch-list{display:grid;gap:10px;margin-top:4px}
+.branch-item{display:flex;align-items:center;justify-content:space-between;gap:10px;background:#fffaf6;border:1px solid var(--border);border-radius:14px;padding:12px 14px;flex-wrap:wrap}
+.branch-item b{font-size:15px}
+.branch-item small{display:block;color:var(--muted);font-size:12px;font-weight:700}
+.branch-item .b-btns{display:flex;gap:8px;flex-wrap:wrap}
+.branch-item .b-btns a{padding:9px 14px;border-radius:11px;font-weight:800;font-size:13.5px}
+.branch-item.soon{opacity:.85}
+.soon-badge{background:#fff1e6;color:#c2410c;border:1px solid #fed7aa;padding:6px 12px;border-radius:999px;font-size:12.5px;font-weight:900}
 .branch-row a{flex:1;min-width:140px;text-align:center;padding:11px;border-radius:13px;font-weight:800;font-size:14px}
 .b-call{background:#1f130b;color:#fff}
 .b-wa{background:var(--green);color:#fff}
@@ -115,27 +123,41 @@ button{font-family:inherit}
 .send-wa{width:100%;margin-top:12px;background:var(--green);color:#fff;border:none;padding:14px;border-radius:14px;font-size:15px;font-weight:900;cursor:pointer}
 .clear-btn{width:100%;margin-top:8px;background:#fff;border:1px solid var(--border);padding:10px;border-radius:12px;font-weight:800;cursor:pointer;color:#666}
 .hint{font-size:12px;color:var(--muted);font-weight:700;text-align:center;margin-top:8px}
+.branch-pick{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:6px}
+.branch-pick-btn{padding:11px 8px;border:2px solid var(--border);background:#fff7f0;border-radius:12px;font-weight:900;font-size:13.5px;cursor:pointer;text-align:center}
+.branch-pick-btn.active{background:#1f130b;color:#fff;border-color:#1f130b}
+.branch-pick-btn small{display:block;font-size:11px;font-weight:700;opacity:.7;margin-top:2px}
+.branch-pick-btn.active small{opacity:.85}
+.branch-modal{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:9999;display:none;align-items:flex-end;justify-content:center}
+.branch-modal.open{display:flex}
+.branch-modal-box{background:#fff;width:100%;max-width:480px;border-radius:20px 20px 0 0;padding:18px 16px 22px}
+.branch-modal-box h3{font-size:18px;margin:0 0 4px}
+.branch-modal-box p{font-size:13px;color:var(--muted);font-weight:700;margin:0 0 12px}
+.branch-choice{display:grid;gap:10px}
+.branch-choice-btn{display:flex;align-items:center;justify-content:space-between;background:#fff7f0;border:2px solid var(--border);border-radius:14px;padding:13px 14px;font-weight:900;font-size:15px;cursor:pointer;text-align:right;width:100%}
+.branch-choice-btn small{display:block;font-size:12px;color:var(--muted);font-weight:700}
+.branch-choice-btn span.arrow{font-size:18px}
+.branch-modal-cancel{width:100%;margin-top:12px;padding:12px;border-radius:12px;border:1px solid var(--border);background:#fff;font-weight:800;cursor:pointer}
 </style>
 </head>
 <body>
 
 <div class="topbar"><div class="topbar-inner">
-  <div class="logo"><div class="logo-mark">ك</div><div><b>كعكة الصمدي</b><span>اطلب دغري واتساب • فرع واحد</span></div></div>
+  <div class="logo"><div class="logo-mark">ك</div><div><b>كعكة الصمدي</b><span>اطلب دغري واتساب • 5 فروع</span></div></div>
   <div class="top-actions"><a class="btn-top btn-call" href="tel:79111754">اتصال</a><a class="btn-top btn-wa" href="https://wa.me/96179111754?text=مرحبا%20كعكة%20الصمدي%20بدي%20اطلب">واتساب</a></div>
 </div></div>
 
 <div class="hero">
   <span class="hero-badge">نقّي الأصناف • كبوس + • وابعت الطلبية واتساب</span>
   <h1>كعكة <em>الصمدي</em></h1>
-  <p>كعكة العصرونية • كعكة الطرابلسية • مناقيش مشروحين</p>
-  <div class="hero-stats"><div class="stat"><b>3</b> قوائم</div><div class="stat">اطلب بـ <b>واتساب</b> دغري</div><div class="stat">التوصيل <b>سريع</b></div></div>
+  <p>كعكة العصرونية • كعكة الطرابلسية</p>
+  <div class="hero-stats"><div class="stat"><b>2</b> قوائم</div><div class="stat">اطلب بـ <b>واتساب</b> دغري</div><div class="stat">التوصيل <b>سريع</b></div></div>
 </div>
 
 <main class="container">
   <div class="main-tabs" id="mainTabs">
     <button class="main-tab active" data-menu="asroneyeh"><strong>كعكة العصرونية</strong><small>القائمة الأولى</small></button>
     <button class="main-tab" data-menu="trablousieh"><strong>كعكة الطرابلسية</strong><small>القائمة الثانية</small></button>
-    <button class="main-tab" data-menu="mashrouhin"><strong>مناقيش مشروحين</strong><small>القائمة الثالثة</small></button>
   </div>
 
   <div class="controls">
@@ -146,11 +168,29 @@ button{font-family:inherit}
   <div id="menuContent"></div>
 
   <section class="branch">
-    <h2>الفرع ورقم التلفون</h2>
-    <p>فرع واحد • للطلب اتصل أو واتساب، ونحنا منجهزلك طلبك.</p>
-    <div class="branch-row">
-      <a class="b-call" href="tel:79111754">📞 اتصال: 79 111 754</a>
-      <a class="b-wa" href="https://wa.me/96179111754?text=مرحبا%20كعكة%20الصمدي%20بدي%20اطلب">💬 واتساب للطلب</a>
+    <h2>فروعنا ورقم التلفون</h2>
+    <p>5 فروع • اختار أقرب فرع عليك واطلب دغري واتساب.</p>
+    <div class="branch-list">
+      <div class="branch-item">
+        <div><b>📍 فرع الرويس</b><small>الفرع الرئيسي • توصيل سريع</small></div>
+        <div class="b-btns"><a class="b-call" href="tel:79111754">📞 79 111 754</a><a class="b-wa" href="https://wa.me/96179111754?text=مرحبا%20كعكة%20الصمدي%20فرع%20الرويس%20بدي%20اطلب">💬 واتساب</a></div>
+      </div>
+      <div class="branch-item">
+        <div><b>📍 فرع المجمع</b><small>اطلب دغري واتساب</small></div>
+        <div class="b-btns"><a class="b-call" href="tel:79121299">📞 79 121 299</a><a class="b-wa" href="https://wa.me/96179121299?text=مرحبا%20كعكة%20الصمدي%20فرع%20المجمع%20بدي%20اطلب">💬 واتساب</a></div>
+      </div>
+      <div class="branch-item">
+        <div><b>📍 فرع البرج</b><small>اطلب دغري واتساب</small></div>
+        <div class="b-btns"><a class="b-call" href="tel:71295392">📞 71 295 392</a><a class="b-wa" href="https://wa.me/96171295392?text=مرحبا%20كعكة%20الصمدي%20فرع%20البرج%20بدي%20اطلب">💬 واتساب</a></div>
+      </div>
+      <div class="branch-item">
+        <div><b>📍 فرع المشرفية</b><small>اطلب دغري واتساب</small></div>
+        <div class="b-btns"><a class="b-call" href="tel:76601370">📞 76 601 370</a><a class="b-wa" href="https://wa.me/96176601370?text=مرحبا%20كعكة%20الصمدي%20فرع%20المشرفية%20بدي%20اطلب">💬 واتساب</a></div>
+      </div>
+      <div class="branch-item soon">
+        <div><b>📍 فرع الجناح</b><small>قريباً • انتظرونا</small></div>
+        <div><span class="soon-badge">قريباً 🔜</span></div>
+      </div>
     </div>
   </section>
   <div class="footer">كعكة الصمدي © 2026 • الأسعار بالليرة اللبنانية</div>
@@ -170,48 +210,75 @@ button{font-family:inherit}
       <div><label>اسمك (اختياري)</label><input id="custName" placeholder="مثلاً: أسامة"></div>
       <div><label>ملاحظة للطلبية (اختياري)</label><textarea id="custNote" rows="2" placeholder="مثلاً: بدون بصل، العنوان..."></textarea></div>
     </div>
+    <div style="margin-top:14px"><label style="font-size:12.5px;font-weight:800;color:#444">اختار الفرع - على أي فرع بدك تبعت الطلبية؟</label>
+      <div class="branch-pick" id="branchPicker">
+        <button type="button" class="branch-pick-btn active" onclick="selectBranch('ruways',this)">📍 فرع الرويس<small>79 111 754</small></button>
+        <button type="button" class="branch-pick-btn" onclick="selectBranch('majma',this)">📍 فرع المجمع<small>79 121 299</small></button>
+        <button type="button" class="branch-pick-btn" onclick="selectBranch('burj',this)">📍 فرع البرج<small>71 295 392</small></button>
+        <button type="button" class="branch-pick-btn" onclick="selectBranch('mashrafiyeh',this)">📍 فرع المشرفية<small>76 601 370</small></button>
+      </div>
+      <div style="font-size:12px;color:var(--muted);font-weight:700;margin-top:6px">فرع الجناح قريباً 🔜</div>
+    </div>
     <div class="total-row"><span>المجموع</span><span id="cartTotal">0 ل.ل.</span></div>
     <button class="send-wa" onclick="sendWhatsApp()">💬 إرسال الطلبية واتساب</button>
     <button class="clear-btn" onclick="clearCart()">مسح الطلبية</button>
-    <div class="hint">لما تكبس إرسال، بيفتح واتساب والطلبية جاهزة مكتوبة، بس كبوس Send</div>
+    <div class="hint">اختار الفرع بالأول، بعدين كبوس إرسال، بيفتح واتساب والطلبية جاهزة مكتوبة، بس كبوس Send</div>
+  </div>
+</div>
+
+<!-- BRANCH PICKER MODAL - for green button below -->
+<div class="branch-modal" id="branchModal" onclick="if(event.target.id==='branchModal') closeBranchModal()">
+  <div class="branch-modal-box">
+    <h3>📍 على أي فرع بدك تطلب؟</h3>
+    <p>اختار الفرع، والطلبية بتروح دغري على واتسابو</p>
+    <div class="branch-choice">
+      <button class="branch-choice-btn" onclick="chooseBranch('ruways')"><span>فرع الرويس<small>79 111 754 • الفرع الرئيسي</small></span><span class="arrow">‹</span></button>
+      <button class="branch-choice-btn" onclick="chooseBranch('majma')"><span>فرع المجمع<small>79 121 299</small></span><span class="arrow">‹</span></button>
+      <button class="branch-choice-btn" onclick="chooseBranch('burj')"><span>فرع البرج<small>71 295 392</small></span><span class="arrow">‹</span></button>
+      <button class="branch-choice-btn" onclick="chooseBranch('mashrafiyeh')"><span>فرع المشرفية<small>76 601 370</small></span><span class="arrow">‹</span></button>
+    </div>
+    <div style="font-size:12px;color:var(--muted);font-weight:700;margin-top:10px;text-align:center">فرع الجناح قريباً 🔜</div>
+    <button class="branch-modal-cancel" onclick="closeBranchModal()">إلغاء</button>
   </div>
 </div>
 
 <script>
 const STORE={currency:"ل.ل.",phone:"79111754",whatsapp:"96179111754"};
-const MENU_DATA={
-asroneyeh:{label:"كعكة العصرونية",categories:[
-{name:"الكلاسيك",items:[{name:"كعكة سادة",price:"100,000"},{name:"زعتر وزيت",price:"260,000"},{name:"بندورة وبصل",price:"360,000"},{name:"بندورة وبصل وجبنة",price:"460,000"}]},
-{name:"اللبنة",items:[{name:"لبنة وزيتون",price:"310,000"},{name:"لبنة ومكدوس",price:"360,000"},{name:"لبنة ومرتديلا",price:"510,000"}]},
-{name:"الأجبان",items:[{name:"عكاوي",price:"440,000"},{name:"عكاوي",tag:"دوبل",tagType:"double",price:"560,000"},{name:"حلوم",price:"460,000"},{name:"حلوم",tag:"دوبل",tagType:"double",price:"560,000"},{name:"قشقوان",price:"490,000"},{name:"قشقوان",tag:"دوبل",tagType:"double",price:"610,000"},{name:"بيكون",price:"410,000"},{name:"بيكون",tag:"دوبل",tagType:"double",price:"510,000"},{name:"فيتا",price:"410,000"},{name:"بلغاري",price:"410,000"},{name:"شلل وزبدة",price:"440,000"}]},
-{name:"مكس أجبان",items:[{name:"عكاوي وبيكون",price:"610,000"},{name:"بيكون وحلوم",price:"610,000"},{name:"عكاوي وحلوم",price:"660,000"},{name:"بيكون وقشقوان",price:"660,000"},{name:"عكاوي وقشقوان",price:"710,000"},{name:"شلل وعكاوي",price:"710,000"},{name:"شلل وقشقوان",price:"710,000"},{name:"فيتا وقشقوان",price:"710,000"},{name:"بلغاري وقشقوان",price:"710,000"},{name:"عكاوي وحلوم وقشقوان",price:"810,000"},{name:"عكاوي وبيكون وقشقوان",price:"810,000"},{name:"عكاوي وبيكون وحلوم وقشقوان",price:"860,000"},{name:"عكاوي وقشقوان وموزريلا وتشدر",price:"890,000"}]},
-{name:"المرتديلا",items:[{name:"مرتديلا",price:"460,000"},{name:"مرتديلا وبيكون",price:"660,000"},{name:"مرتديلا وحلوم",price:"660,000"},{name:"مرتديلا وعكاوي",price:"660,000"},{name:"مرتديلا وقشقوان",price:"680,000"}]},
-{name:"لحوم ودجاج",items:[{name:"سجق وقشقوان",price:"610,000"},{name:"فاهيتا وقشقوان",price:"610,000"},{name:"طاووق وقشقوان",price:"610,000"},{name:"تشدر هوت دوغ",price:"660,000"},{name:"حبش وقشقوان",price:"710,000"}]},
-{name:"كعكة بيتزا",items:[{name:"خضرا",price:"560,000"},{name:"مرتديلا",price:"710,000"},{name:"سجق",price:"710,000"},{name:"بيبروني",price:"710,000"},{name:"تشدر هوت دوغ",price:"710,000"},{name:"حبش",price:"760,000"},{name:"دجاج باربكيو",price:"760,000"}]},
-{name:"الصحون",items:[{name:"خضرا",price:"160,000"},{name:"لبنة وزيتون وحر",price:"310,000"},{name:"لبنة ومكدوس",price:"360,000"},{name:"لبنة",tag:"إكسترا",tagType:"extra",price:"360,000"},{name:"مشكل",price:"660,000"},{name:"مشكل",tag:"إكسترا",tagType:"extra",price:"860,000"}]},
-{name:"الحلو",items:[{name:"نوتيلا",price:"460,000"},{name:"نوتيلا وموز",price:"510,000"},{name:"نوتيلا",tag:"إكسترا",tagType:"extra",price:"560,000"}]}
-]},
-trablousieh:{label:"كعكة الطرابلسية",categories:[
-{name:"الكلاسيك",items:[{name:"كعكة سادة",price:"30,000"},{name:"زعتر وزيت",price:"100,000"},{name:"بندورة وبصل",price:"150,000"},{name:"بندورة وبصل وجبنة",price:"250,000"}]},
-{name:"اللبنة",items:[{name:"لبنة وزيتون",price:"130,000"},{name:"لبنة ومكدوس",price:"160,000"},{name:"لبنة ومرتديلا",price:"250,000"}]},
-{name:"الأجبان",items:[{name:"عكاوي",price:"190,000"},{name:"عكاوي",tag:"دوبل",tagType:"double",price:"250,000"},{name:"حلوم",price:"200,000"},{name:"حلوم",tag:"دوبل",tagType:"double",price:"250,000"},{name:"قشقوان",price:"230,000"},{name:"قشقوان",tag:"دوبل",tagType:"double",price:"280,000"},{name:"بيكون",price:"180,000"},{name:"بيكون",tag:"دوبل",tagType:"double",price:"230,000"},{name:"فيتا",price:"160,000"},{name:"بلغاري",price:"160,000"},{name:"شلل وزبدة",price:"200,000"}]},
-{name:"مكس أجبان",items:[{name:"عكاوي وبيكون",price:"280,000"},{name:"بيكون وحلوم",price:"280,000"},{name:"عكاوي وحلوم",price:"280,000"},{name:"بيكون وقشقوان",price:"300,000"},{name:"شلل وعكاوي",price:"300,000"},{name:"عكاوي وقشقوان",price:"330,000"},{name:"شلل وقشقوان",price:"330,000"},{name:"فيتا وقشقوان",price:"330,000"},{name:"بلغاري وقشقوان",price:"330,000"},{name:"عكاوي وحلوم وقشقوان",price:"350,000"},{name:"عكاوي وبيكون وقشقوان",price:"350,000"},{name:"عكاوي وبيكون وحلوم وقشقوان",price:"400,000"}]},
-{name:"المرتديلا",items:[{name:"مرتديلا",price:"200,000"},{name:"مرتديلا وبيكون",price:"300,000"},{name:"مرتديلا وحلوم",price:"300,000"},{name:"مرتديلا وعكاوي",price:"300,000"},{name:"مرتديلا وقشقوان",price:"300,000"}]},
-{name:"لحوم ودجاج",items:[{name:"سجق وقشقوان",price:"300,000"},{name:"فاهيتا وقشقوان",price:"300,000"},{name:"طاووق وقشقوان",price:"300,000"},{name:"حبش وقشقوان",price:"330,000"}]},
-{name:"كعكة بيتزا",items:[{name:"خضرا",price:"250,000"},{name:"مرتديلا",price:"330,000"},{name:"سجق",price:"330,000"},{name:"بيبروني",price:"330,000"},{name:"حبش",price:"350,000"},{name:"دجاج باربكيو",price:"350,000"}]},
-{name:"الحلو",items:[{name:"نوتيلا",price:"200,000"},{name:"نوتيلا وموز",price:"230,000"},{name:"نوتيلا",tag:"إكسترا",tagType:"extra",price:"250,000"}]}
-]},
-mashrouhin:{label:"مناقيش مشروحين",categories:[
-{name:"الكلاسيك",items:[{name:"زعتر",price:"100,000"},{name:"زعتر مع خضرا",price:"120,000"},{name:"بندورة وبصل",price:"250,000"},{name:"بندورة وبصل وجبنة",price:"300,000"}]},
-{name:"اللبنة",items:[{name:"لبنة وزيتون",price:"200,000"},{name:"لبنة ومكدوس",price:"250,000"}]},
-{name:"الأجبان",items:[{name:"عكاوي",price:"250,000"},{name:"عكاوي",tag:"دوبل",tagType:"double",price:"380,000"},{name:"حلوم",price:"300,000"},{name:"حلوم",tag:"دوبل",tagType:"double",price:"380,000"},{name:"قشقوان",price:"350,000"},{name:"قشقوان",tag:"دوبل",tagType:"double",price:"420,000"},{name:"بيكون",price:"300,000"},{name:"بيكون",tag:"دوبل",tagType:"double",price:"400,000"},{name:"فيتا",price:"250,000"},{name:"بلغاري",price:"250,000"},{name:"شلل",price:"330,000"}]},
-{name:"مكس أجبان",items:[{name:"كوكتيل طبقتين",price:"330,000"},{name:"عكاوي وبيكون",price:"400,000"},{name:"بيكون وحلوم",price:"400,000"},{name:"عكاوي وحلوم",price:"400,000"},{name:"بيكون وقشقوان",price:"420,000"},{name:"عكاوي وقشقوان",price:"420,000"},{name:"شلل وقشقوان",price:"420,000"},{name:"فيتا وقشقوان",price:"420,000"},{name:"بلغاري وقشقوان",price:"420,000"},{name:"عكاوي وحلوم وقشقوان",price:"500,000"},{name:"عكاوي وبيكون وقشقوان",price:"500,000"},{name:"4 أجبان",price:"600,000"},{name:"عكاوي وقشقوان وموزريلا وتشدر",price:"700,000"}]},
-{name:"المرتديلا",items:[{name:"مرتديلا",price:"350,000"},{name:"مرتديلا وبيكون",price:"420,000"},{name:"مرتديلا وحلوم",price:"420,000"},{name:"مرتديلا وعكاوي",price:"450,000"},{name:"مرتديلا وقشقوان",price:"470,000"}]},
-{name:"لحوم ودجاج",items:[{name:"سجق وقشقوان",price:"420,000"},{name:"فاهيتا وقشقوان",price:"420,000"},{name:"طاووق وقشقوان",price:"420,000"},{name:"تشدر هوت دوغ",price:"450,000"},{name:"حبش وقشقوان",price:"470,000"}]},
-{name:"كعكة بيتزا",items:[{name:"خضرا",price:"400,000"},{name:"مرتديلا",price:"500,000"},{name:"سجق",price:"500,000"},{name:"بيبروني",price:"500,000"},{name:"حبش",price:"520,000"},{name:"دجاج باربكيو",price:"520,000"}]},
-{name:"الحلو",items:[{name:"نوتيلا",price:"300,000"},{name:"نوتيلا وموز",price:"350,000"},{name:"نوتيلا",tag:"إكسترا",tagType:"extra",price:"400,000"}]}
-]}
-};
+const BRANCHES=[{"id":"ruways","name":"فرع الرويس","phone":"79111754","whatsapp":"96179111754"},{"id":"majma","name":"فرع المجمع","phone":"79121299","whatsapp":"96179121299"},{"id":"burj","name":"فرع البرج","phone":"71295392","whatsapp":"96171295392"},{"id":"mashrafiyeh","name":"فرع المشرفية","phone":"76601370","whatsapp":"96176601370"}];
+let selectedBranch='ruways';
+function selectBranch(id,el){
+  selectedBranch=id;
+  document.querySelectorAll('.branch-pick-btn').forEach(b=>b.classList.remove('active'));
+  if(el) el.classList.add('active');
+}
+function openBranchModal(){ document.getElementById('branchModal').classList.add('open'); }
+function closeBranchModal(){ document.getElementById('branchModal').classList.remove('open'); }
+function chooseBranch(id){
+  const branch=BRANCHES.find(b=>b.id===id)||BRANCHES[0];
+  selectedBranch=id;
+  closeBranchModal();
+  if(cartCount()===0){
+    const msg='مرحبا كعكة الصمدي\nالفرع: '+branch.name+'\nبدي اطلب';
+    window.open('https://wa.me/'+branch.whatsapp+'?text='+encodeURIComponent(msg),'_blank');
+  } else {
+    sendWhatsAppToBranch(branch);
+  }
+}
+function sendWhatsAppToBranch(branch){
+  const name=document.getElementById('custName')?document.getElementById('custName').value.trim():'';
+  const note=document.getElementById('custNote')?document.getElementById('custNote').value.trim():'';
+  let msg='مرحبا كعكة الصمدي\nالفرع: '+branch.name+'\nبدي اطلب:\n\n';
+  Object.values(cart).forEach(c=>{
+    const lineTotal=parsePrice(c.price)*c.qty;
+    msg+=`• ${c.qty} × ${c.name}${c.tag?` (${c.tag})`:''} - ${fmt(lineTotal)} ل.ل.\n   (${MENU_DATA[c.menu].label} - ${c.cat})\n`;
+  });
+  msg+=`\n----------------\nالفرع: ${branch.name} (${branch.phone})\nالمجموع: ${fmt(cartTotal())} ل.ل.`;
+  if(name) msg+=`\nالاسم: ${name}`;
+  if(note) msg+=`\nملاحظة: ${note}`;
+  msg+=`\n\nشكراً!`;
+  window.open('https://wa.me/'+branch.whatsapp+'?text='+encodeURIComponent(msg),'_blank');
+}
+const MENU_DATA={"asroneyeh":{"label":"كعكة العصرونية","categories":[{"name":"الكلاسيك","items":[{"name":"كعكة سادة","price":"100,000"},{"name":"زعتر وزيت","price":"260,000"},{"name":"بندورة وبصل","price":"360,000"},{"name":"بندورة وبصل وجبنة","price":"460,000"}]},{"name":"اللبنة","items":[{"name":"لبنة وزيتون","price":"310,000"},{"name":"لبنة ومكدوس","price":"360,000"},{"name":"لبنة ومرتديلا","price":"510,000"}]},{"name":"الأجبان","items":[{"name":"عكاوي","price":"440,000"},{"name":"عكاوي","tag":"دوبل","tagType":"double","price":"560,000"},{"name":"حلوم","price":"460,000"},{"name":"حلوم","tag":"دوبل","tagType":"double","price":"560,000"},{"name":"قشقوان","price":"490,000"},{"name":"قشقوان","tag":"دوبل","tagType":"double","price":"610,000"},{"name":"بيكون","price":"410,000"},{"name":"بيكون","tag":"دوبل","tagType":"double","price":"510,000"},{"name":"فيتا","price":"410,000"},{"name":"بلغاري","price":"410,000"},{"name":"شلل وزبدة","price":"440,000"}]},{"name":"مكس أجبان","items":[{"name":"عكاوي وبيكون","price":"610,000"},{"name":"بيكون وحلوم","price":"610,000"},{"name":"عكاوي وحلوم","price":"660,000"},{"name":"بيكون وقشقوان","price":"660,000"},{"name":"عكاوي وقشقوان","price":"710,000"},{"name":"شلل وعكاوي","price":"710,000"},{"name":"شلل وقشقوان","price":"710,000"},{"name":"فيتا وقشقوان","price":"710,000"},{"name":"بلغاري وقشقوان","price":"710,000"},{"name":"عكاوي وحلوم وقشقوان","price":"810,000"},{"name":"عكاوي وبيكون وقشقوان","price":"810,000"},{"name":"عكاوي وبيكون وحلوم وقشقوان","price":"860,000"},{"name":"عكاوي وقشقوان وموزريلا وتشدر","price":"890,000"}]},{"name":"المرتديلا","items":[{"name":"مرتديلا","price":"460,000"},{"name":"مرتديلا وبيكون","price":"660,000"},{"name":"مرتديلا وحلوم","price":"660,000"},{"name":"مرتديلا وعكاوي","price":"660,000"},{"name":"مرتديلا وقشقوان","price":"680,000"}]},{"name":"لحوم ودجاج","items":[{"name":"سجق وقشقوان","price":"610,000"},{"name":"فاهيتا وقشقوان","price":"610,000"},{"name":"طاووق وقشقوان","price":"610,000"},{"name":"تشدر هوت دوغ","price":"660,000"},{"name":"حبش وقشقوان","price":"710,000"}]},{"name":"كعكة بيتزا","items":[{"name":"خضرا","price":"560,000"},{"name":"مرتديلا","price":"710,000"},{"name":"سجق","price":"710,000"},{"name":"بيبروني","price":"710,000"},{"name":"تشدر هوت دوغ","price":"710,000"},{"name":"حبش","price":"760,000"},{"name":"دجاج باربكيو","price":"760,000"}]},{"name":"الصحون","items":[{"name":"خضرا","price":"160,000"},{"name":"لبنة وزيتون وحر","price":"310,000"},{"name":"لبنة ومكدوس","price":"360,000"},{"name":"لبنة","tag":"إكسترا","tagType":"extra","price":"360,000"},{"name":"مشكل","price":"660,000"},{"name":"مشكل","tag":"إكسترا","tagType":"extra","price":"860,000"}]},{"name":"الحلو","items":[{"name":"نوتيلا","price":"460,000"},{"name":"نوتيلا وموز","price":"510,000"},{"name":"نوتيلا","tag":"إكسترا","tagType":"extra","price":"560,000"}]}]},"trablousieh":{"label":"كعكة الطرابلسية","categories":[{"name":"الكلاسيك","items":[{"name":"كعكة سادة","price":"30,000"},{"name":"زعتر وزيت","price":"130,000"},{"name":"بندورة وبصل","price":"180,000"},{"name":"بندورة وبصل وجبنة","price":"280,000"}]},{"name":"اللبنة","items":[{"name":"لبنة وزيتون","price":"160,000"},{"name":"لبنة ومكدوس","price":"190,000"},{"name":"لبنة ومرتديلا","price":"280,000"}]},{"name":"الأجبان","items":[{"name":"عكاوي","price":"220,000"},{"name":"عكاوي","tag":"دوبل","tagType":"double","price":"280,000"},{"name":"حلوم","price":"230,000"},{"name":"حلوم","tag":"دوبل","tagType":"double","price":"280,000"},{"name":"قشقوان","price":"260,000"},{"name":"قشقوان","tag":"دوبل","tagType":"double","price":"310,000"},{"name":"بيكون","price":"210,000"},{"name":"بيكون","tag":"دوبل","tagType":"double","price":"260,000"},{"name":"فيتا","price":"190,000"},{"name":"بلغاري","price":"190,000"},{"name":"شلل وزبدة","price":"230,000"}]},{"name":"مكس أجبان","items":[{"name":"عكاوي وبيكون","price":"310,000"},{"name":"بيكون وحلوم","price":"310,000"},{"name":"عكاوي وحلوم","price":"310,000"},{"name":"بيكون وقشقوان","price":"330,000"},{"name":"شلل وعكاوي","price":"330,000"},{"name":"عكاوي وقشقوان","price":"360,000"},{"name":"شلل وقشقوان","price":"360,000"},{"name":"فيتا وقشقوان","price":"360,000"},{"name":"بلغاري وقشقوان","price":"360,000"},{"name":"عكاوي وحلوم وقشقوان","price":"380,000"},{"name":"عكاوي وبيكون وقشقوان","price":"380,000"},{"name":"عكاوي وبيكون وحلوم وقشقوان","price":"430,000"}]},{"name":"المرتديلا","items":[{"name":"مرتديلا","price":"230,000"},{"name":"مرتديلا وبيكون","price":"330,000"},{"name":"مرتديلا وحلوم","price":"330,000"},{"name":"مرتديلا وعكاوي","price":"330,000"},{"name":"مرتديلا وقشقوان","price":"330,000"}]},{"name":"لحوم ودجاج","items":[{"name":"سجق وقشقوان","price":"330,000"},{"name":"فاهيتا وقشقوان","price":"330,000"},{"name":"طاووق وقشقوان","price":"330,000"},{"name":"حبش وقشقوان","price":"360,000"}]},{"name":"كعكة بيتزا","items":[{"name":"خضرا","price":"280,000"},{"name":"مرتديلا","price":"360,000"},{"name":"سجق","price":"360,000"},{"name":"بيبروني","price":"360,000"},{"name":"حبش","price":"380,000"},{"name":"دجاج باربكيو","price":"380,000"}]},{"name":"الحلو","items":[{"name":"نوتيلا","price":"230,000"},{"name":"نوتيلا وموز","price":"260,000"},{"name":"نوتيلا","tag":"إكسترا","tagType":"extra","price":"280,000"}]}]}};
 
 let currentMenu='asroneyeh', currentSub='الكل', searchQuery='';
 let cart={};
@@ -249,6 +316,8 @@ function renderMenu(){
       const ctrl = qty===0
         ? `<button class="add-btn" onclick="addItem('${currentMenu}','${cat.name}','${it.name}','${it.tag||''}','${it.price}')">+</button>`
         : `<div class="qty-ctrl"><button onclick="changeQty('${key}',-1)">−</button><span class="qty-num">${qty}</span><button class="plus" onclick="changeQty('${key}',1)">+</button></div>`;
+      const imgHtml = it.image ? `<img class="item-img" src="${it.image}" alt="" loading="lazy">` : '';
+      if(imgHtml) return `<div class="card card-has-img">${imgHtml}<div class="card-row"><div class="item-left"><div class="item-name">${tag}${it.name}</div><div class="item-cat">${data.label} • ${cat.name}</div></div><div class="item-right"><div class="price">${it.price} <small>ل.ل.</small></div>${ctrl}</div></div></div>`;
       return `<div class="card"><div class="item-left"><div class="item-name">${tag}${it.name}</div><div class="item-cat">${data.label} • ${cat.name}</div></div><div class="item-right"><div class="price">${it.price} <small>ل.ل.</small></div>${ctrl}</div></div>`;
     }).join('');
     html+=`</div></div>`;
@@ -275,9 +344,9 @@ function renderCartBar(){
   const bar=document.getElementById('cartBarInner');
   const count=cartCount(), total=cartTotal();
   if(count===0){
-    bar.innerHTML=`<div class="cart-empty-bar" style="width:100%"><span>نقّي من المنيو وكبوس + لتضيف على الطلبية</span><a href="https://wa.me/96179111754?text=مرحبا%20كعكة%20الصمدي%20بدي%20اطلب">واتساب دغري</a></div>`;
+    bar.innerHTML=`<div class="cart-empty-bar" style="width:100%"><span>نقّي من المنيو وكبوس + لتضيف على الطلبية</span><button onclick="openBranchModal()" style="background:#25d366;color:#fff;border:none;padding:10px 16px;border-radius:12px;font-weight:900;cursor:pointer">واتساب دغري</button></div>`;
   } else {
-    bar.innerHTML=`<div class="cart-info"><b>🛒 ${count} أصناف بالطلبية</b><span>المجموع: ${fmt(total)} ل.ل.</span></div><button class="cart-btn cart-view" onclick="openCart()">شوف الطلبية</button><button class="cart-btn cart-send" onclick="sendWhatsApp()">إرسال واتساب</button>`;
+    bar.innerHTML=`<div class="cart-info"><b>🛒 ${count} أصناف بالطلبية</b><span>المجموع: ${fmt(total)} ل.ل.</span></div><button class="cart-btn cart-view" onclick="openCart()">شوف الطلبية</button><button class="cart-btn cart-send" onclick="openBranchModal()">إرسال واتساب</button>`;
   }
 }
 function renderCartList(){
@@ -298,9 +367,12 @@ document.getElementById('overlay').addEventListener('click',e=>{ if(e.target.id=
 
 function sendWhatsApp(){
   if(cartCount()===0){ alert('الطلبية فاضية، ضيف صنف بالأول'); return; }
+  const branch=BRANCHES.find(b=>b.id===selectedBranch)||BRANCHES[0];
+  sendWhatsAppToBranch(branch);
+  return;
   const name=document.getElementById('custName').value.trim();
   const note=document.getElementById('custNote').value.trim();
-  let msg='مرحبا كعكة الصمدي 👋\nبدي اطلب:\n\n';
+  let msg='مرحبا كعكة الصمدي\nالفرع: '+branch.name+'\nبدي اطلب:\n\n';
   Object.values(cart).forEach(c=>{
     const lineTotal=parsePrice(c.price)*c.qty;
     msg+=`• ${c.qty} × ${c.name}${c.tag?` (${c.tag})`:''} - ${fmt(lineTotal)} ل.ل.\n   (${MENU_DATA[c.menu].label} - ${c.cat})\n`;
