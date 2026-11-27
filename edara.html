@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>إدارة المينيو</title>
+<style>
+/* ===== Professional Admin - Clean, from Copilot simplicity ===== */
+*{box-sizing:border-box}
+:root{--orange:#f97316;--bg:#fff7f0;--border:#f3e8d8;--muted:#8a7a6a;--green:#25d366}
+body{font-family:Tahoma,Arial,sans-serif;background:var(--bg);margin:0;padding:0;color:#1f130b}
+.top{background:#1f130b;color:#fff;padding:16px;display:flex;justify-content:space-between;align-items:center}
+.top b{font-size:18px}
+.top small{display:block;font-size:12px;opacity:.7;margin-top:2px}
+.top button{background:#fff;color:#1f130b;border:none;padding:8px 14px;border-radius:10px;font-weight:900;cursor:pointer}
+.top .view{background:var(--orange);color:#fff}
+.wrap{max-width:760px;margin:0 auto;padding:14px}
+.card{background:#fff;border:1px solid var(--border);border-radius:16px;padding:14px;margin-bottom:12px}
+.tabs{display:flex;gap:8px;margin-bottom:12px;overflow-x:auto}
+.tab{padding:10px 16px;border:1px solid var(--border);border-radius:20px;background:#fff;font-weight:900;cursor:pointer;white-space:nowrap}
+.tab.active{background:#1f130b;color:#fff;border-color:#1f130b}
+label{display:block;font-size:13px;font-weight:900;margin-bottom:4px}
+input,select,textarea{width:100%;padding:11px;border:1px solid #ddd;border-radius:10px;font-family:inherit;font-size:14px;background:#fff}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:520px){.row{grid-template-columns:1fr}}
+.btn{width:100%;padding:12px;border:none;border-radius:12px;font-weight:900;cursor:pointer;font-size:14px}
+.btn-orange{background:var(--orange);color:#fff}
+.btn-green{background:var(--green);color:#fff}
+.btn-white{background:#f1f1f1;color:#1f130b}
+.btn-dark{background:#1f130b;color:#fff}
+.item{display:flex;gap:10px;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid #f3e8d8}
+.item:last-child{border-bottom:none}
+.img-preview{width:56px;height:56px;object-fit:cover;border-radius:10px;background:#fff7f0;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--muted);text-align:center}
+.actions{display:flex;gap:6px;flex-shrink:0}
+.actions button{padding:7px 10px;border:none;border-radius:10px;font-weight:900;cursor:pointer;font-size:12px}
+.badge{background:#fef3c7;color:#92400e;font-size:11px;padding:3px 8px;border-radius:20px;font-weight:900}
+.login{max-width:380px;margin:80px auto;padding:20px}
+.login h2{text-align:center}
+/* Modal */
+.item-modal{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:9999;display:none;align-items:flex-end;justify-content:center}
+.item-modal.open{display:flex}
+.item-modal-box{background:#fff;width:100%;max-width:480px;border-radius:20px 20px 0 0;padding:18px 16px 22px;max-height:90vh;overflow-y:auto}
+.img-picker{border:2px dashed var(--border);border-radius:14px;padding:14px;text-align:center;background:#fffdf8}
+.img-picker img{max-width:100%;max-height:220px;border-radius:12px;display:none;margin:0 auto}
+.img-pick-btn{background:var(--orange);color:#fff;border:none;padding:10px 14px;border-radius:10px;font-weight:900;cursor:pointer}
+.img-remove-btn{background:#fee2e2;color:#991b1b;border:none;padding:8px 12px;border-radius:10px;font-weight:900;cursor:pointer;margin-top:8px}
+.save-bar{position:sticky;bottom:12px;box-shadow:0 10px 30px rgba(0,0,0,.12)}
+</style>
+</head>
+<body>
+
+<div id="loginScreen" class="login">
+<div class="card" style="text-align:center">
+<h2>إدارة المينيو</h2>
+<p style="color:#8a7a6a;font-size:13px">كعكة الصمدي</p>
+<label style="text-align:right">كلمة السر</label>
+<input id="passInput" type="password" placeholder="اكتب كلمة السر" inputmode="numeric">
+<button class="btn btn-orange" style="margin-top:12px" onclick="doLogin()">دخول</button>
+<p style="font-size:12px;color:#8a7a6a">كلمة السر الأولى: 1234 - فيك تغيرها من جوا</p>
+</div>
+</div>
+
+<div id="mainScreen" style="display:none">
+<div class="top">
+<div><b>إدارة المينيو</b><small>كعكة الصمدي</small></div>
+<div style="display:flex;gap:8px"><button class="view" onclick="window.open('index.html','_blank')">عرض المينيو</button><button onclick="logout()">خروج</button></div>
+</div>
+<div class="wrap">
+<div style="background:#1f130b;color:#fff;border-radius:14px;padding:12px 14px;margin-bottom:12px;display:flex;align-items:center;gap:10px"><span style="font-size:20px">⚙️</span><div><b style="font-size:14px">إدارة المينيو</b><p style="font-size:12px;opacity:.8;margin:2px 0 0">عدّل، حط صور، بعدين كبوس حفظ دغري فوق.</p></div></div>
+<div id="loading" class="card" style="text-align:center">عم حمّل المينيو ...</div>
+<div class="tabs" id="tabs" style="display:none"></div>
+<div id="content"></div>
+<div class="card save-bar" id="saveCard" style="display:none">
+<div id="directSaveStatus" style="font-size:13px;margin-bottom:8px"></div>
+<button class="btn btn-green" onclick="saveDirectly()">🚀 حفظ دغري على الموقع</button>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px">
+<button class="btn btn-white" onclick="exportMenu()">⬇ تنزيل المينيو (طريقة قديمة)</button>
+<button class="btn btn-white" onclick="switchTab('general')">⚙️ إعداد الحفظ الدغري</button>
+</div>
+<p style="font-size:11px;color:#8a7a6a;margin:8px 0 0;text-align:center">اذا الحفظ الدغري ما زبط، استعمل التنزيل وارفع الملف بإيدك.</p>
+</div>
+</div>
+</div>
+
+<!-- Edit Modal -->
+<div class="item-modal" id="itemModal" onclick="if(event.target.id==='itemModal')closeItemModal()">
+<div class="item-modal-box">
+<div style="display:flex;justify-content:space-between;align-items:center"><h3 id="itemModalTitle" style="font-size:17px;margin:0">تعديل صنف</h3><button onclick="closeItemModal()" style="background:#f1f1f1;border:none;width:32px;height:32px;border-radius:50%;font-weight:900;cursor:pointer">✕</button></div>
+<div style="margin-top:14px">
+<label>اسم الصنف</label><input id="modalName" placeholder="مثلاً كعكة زعتر">
+<div style="margin-top:10px"><label>السعر</label><input id="modalPrice" placeholder="مثلاً 260,000"></div>
+<div style="margin-top:10px"><label>تاغ (اختياري - دوبل / إكسترا)</label><input id="modalTag" placeholder="خليه فاضي اذا ما بدك"></div>
+<div style="margin-top:12px"><label>صورة الصنف</label>
+<div class="img-picker">
+<div id="imgEmpty" style="color:#8a7a6a;font-size:13px;font-weight:700">ما فيه صورة بعد<br><span style="font-size:12px">كبوس الزر واختار صورة من تلفونك</span></div>
+<img id="imgPreview" src="">
+<br><button type="button" class="img-pick-btn" style="margin-top:10px" onclick="document.getElementById('modalImageInput').click()">📸 اختر صورة من تلفونك</button>
+<input type="file" id="modalImageInput" accept="image/*" style="display:none" onchange="onImagePicked(event)">
+<br><button type="button" class="img-remove-btn" onclick="removeModalImage()">🗑 امسح الصورة</button>
+<div style="font-size:11px;color:#8a7a6a;margin-top:6px">الصورة بتنحفظ مع المينيو، ما بدك ترفعها لحال</div>
+</div>
+</div>
+<div class="row" style="margin-top:14px"><button class="btn btn-white" onclick="closeItemModal()">إلغاء</button><button class="btn btn-green" onclick="saveModalItem()">💾 حفظ الصنف</button></div>
+</div>
+</div>
+</div>
+
+<script>
+// Fallback menu if index.html is missing - so Edit always works
+const FALLBACK_MENU = {
+asroneyeh:{label:"كعكة العصرونية",categories:[
+{name:"الكلاسيك",items:[{name:"كعكة سادة",price:"100,000"},{name:"زعتر وزيت",price:"260,000"},{name:"بندورة وبصل",price:"360,000"},{name:"بندورة وبصل وجبنة",price:"460,000"}]},
+{name:"اللبنة",items:[{name:"لبنة وزيتون",price:"310,000"},{name:"لبنة ومكدوس",price:"360,000"},{name:"لبنة ومرتديلا",price:"510,000"}]},
+{name:"الأجبان",items:[{name:"عكاوي",price:"440,000"},{name:"عكاوي",tag:"دوبل",tagType:"double",price:"560,000"},{name:"حلوم",price:"460,000"},{name:"حلوم",tag:"دوبل",tagType:"double",price:"560,000"},{name:"قشقوان",price:"490,000"},{name:"قشقوان",tag:"دوبل",tagType:"double",price:"610,000"},{name:"بيكون",price:"410,000"},{name:"بيكون",tag:"دوبل",tagType:"double",price:"510,000"},{name:"فيتا",price:"410,000"},{name:"بلغاري",price:"410,000"},{name:"شلل وزبدة",price:"440,000"}]},
+{name:"مكس أجبان",items:[{name:"عكاوي وبيكون",price:"610,000"},{name:"بيكون وحلوم",price:"610,000"},{name:"عكاوي وحلوم",price:"660,000"},{name:"بيكون وقشقوان",price:"660,000"},{name:"عكاوي وقشقوان",price:"710,000"},{name:"شلل وعكاوي",price:"710,000"},{name:"شلل وقشقوان",price:"710,000"},{name:"فيتا وقشقوان",price:"710,000"},{name:"بلغاري وقشقوان",price:"710,000"},{name:"عكاوي وحلوم وقشقوان",price:"810,000"},{name:"عكاوي وبيكون وقشقوان",price:"810,000"},{name:"عكاوي وبيكون وحلوم وقشقوان",price:"860,000"},{name:"عكاوي وقشقوان وموزريلا وتشدر",price:"890,000"}]},
+{name:"المرتديلا",items:[{name:"مرتديلا",price:"460,000"},{name:"مرتديلا وبيكون",price:"660,000"},{name:"مرتديلا وحلوم",price:"660,000"},{name:"مرتديلا وعكاوي",price:"660,000"},{name:"مرتديلا وقشقوان",price:"680,000"}]},
+{name:"لحوم ودجاج",items:[{name:"سجق وقشقوان",price:"610,000"},{name:"فاهيتا وقشقوان",price:"610,000"},{name:"طاووق وقشقوان",price:"610,000"},{name:"تشدر هوت دوغ",price:"660,000"},{name:"حبش وقشقوان",price:"710,000"}]},
+{name:"كعكة بيتزا",items:[{name:"خضرا",price:"560,000"},{name:"مرتديلا",price:"710,000"},{name:"سجق",price:"710,000"},{name:"بيبروني",price:"710,000"},{name:"تشدر هوت دوغ",price:"710,000"},{name:"حبش",price:"760,000"},{name:"دجاج باربكيو",price:"760,000"}]},
+{name:"الصحون",items:[{name:"خضرا",price:"160,000"},{name:"لبنة وزيتون وحر",price:"310,000"},{name:"لبنة ومكدوس",price:"360,000"},{name:"لبنة",tag:"إكسترا",tagType:"extra",price:"360,000"},{name:"مشكل",price:"660,000"},{name:"مشكل",tag:"إكسترا",tagType:"extra",price:"860,000"}]},
+{name:"الحلو",items:[{name:"نوتيلا",price:"460,000"},{name:"نوتيلا وموز",price:"510,000"},{name:"نوتيلا",tag:"إكسترا",tagType:"extra",price:"560,000"}]}
+]},
+trablousieh:{label:"كعكة الطرابلسية",categories:[
+{name:"الكلاسيك",items:[{name:"كعكة سادة",price:"30,000"},{name:"زعتر وزيت",price:"130,000"},{name:"بندورة وبصل",price:"180,000"},{name:"بندورة وبصل وجبنة",price:"280,000"}]},
+{name:"اللبنة",items:[{name:"لبنة وزيتون",price:"160,000"},{name:"لبنة ومكدوس",price:"190,000"},{name:"لبنة ومرتديلا",price:"280,000"}]},
+{name:"الأجبان",items:[{name:"عكاوي",price:"220,000"},{name:"عكاوي",tag:"دوبل",tagType:"double",price:"280,000"},{name:"حلوم",price:"230,000"},{name:"حلوم",tag:"دوبل",tagType:"double",price:"280,000"},{name:"قشقوان",price:"260,000"},{name:"قشقوان",tag:"دوبل",tagType:"double",price:"310,000"},{name:"بيكون",price:"210,000"},{name:"بيكون",tag:"دوبل",tagType:"double",price:"260,000"},{name:"فيتا",price:"190,000"},{name:"بلغاري",price:"190,000"},{name:"شلل وزبدة",price:"230,000"}]},
+{name:"مكس أجبان",items:[{name:"عكاوي وبيكون",price:"310,000"},{name:"بيكون وحلوم",price:"310,000"},{name:"عكاوي وحلوم",price:"310,000"},{name:"بيكون وقشقوان",price:"330,000"},{name:"شلل وعكاوي",price:"330,000"},{name:"عكاوي وقشقوان",price:"360,000"},{name:"شلل وقشقوان",price:"360,000"},{name:"فيتا وقشقوان",price:"360,000"},{name:"بلغاري وقشقوان",price:"360,000"},{name:"عكاوي وحلوم وقشقوان",price:"380,000"},{name:"عكاوي وبيكون وقشقوان",price:"380,000"},{name:"عكاوي وبيكون وحلوم وقشقوان",price:"430,000"}]},
+{name:"المرتديلا",items:[{name:"مرتديلا",price:"230,000"},{name:"مرتديلا وبيكون",price:"330,000"},{name:"مرتديلا وحلوم",price:"330,000"},{name:"مرتديلا وعكاوي",price:"330,000"},{name:"مرتديلا وقشقوان",price:"330,000"}]},
+{name:"لحوم ودجاج",items:[{name:"سجق وقشقوان",price:"330,000"},{name:"فاهيتا وقشقوان",price:"330,000"},{name:"طاووق وقشقوان",price:"330,000"},{name:"حبش وقشقوان",price:"360,000"}]},
+{name:"كعكة بيتزا",items:[{name:"خضرا",price:"280,000"},{name:"مرتديلا",price:"360,000"},{name:"سجق",price:"360,000"},{name:"بيبروني",price:"360,000"},{name:"حبش",price:"380,000"},{name:"دجاج باربكيو",price:"380,000"}]},
+{name:"الحلو",items:[{name:"نوتيلا",price:"230,000"},{name:"نوتيلا وموز",price:"260,000"},{name:"نوتيلا",tag:"إكسترا",tagType:"extra",price:"280,000"}]}
+]}
+};
+let DATA=null, BRANCHES=[
+  {id:'ruways',name:'فرع الرويس',phone:'79111754',whatsapp:'96179111754',soon:false},
+  {id:'majma',name:'فرع المجمع',phone:'79121299',whatsapp:'96179121299',soon:false},
+  {id:'burj',name:'فرع البرج',phone:'71295392',whatsapp:'96171295392',soon:false},
+  {id:'mashrafiyeh',name:'فرع المشرفية',phone:'76601370',whatsapp:'96176601370',soon:false},
+  {id:'janah',name:'فرع الجناح',phone:'',whatsapp:'',soon:true}
+];
+let TEMPLATE='', currentMenu='asroneyeh', currentTab='items';
+let GH=JSON.parse(localStorage.getItem('samadi_gh')||'{"owner":"ka3kat-alarz","repo":"menu-ka3kat-alsamadi3","branch":"main","token":""}');
+function getPass(){return localStorage.getItem('samadi_pass')||'1234';}
+function doLogin(){
+  const v=document.getElementById('passInput').value.trim();
+  if(v===getPass()){
+    document.getElementById('loginScreen').style.display='none';
+    document.getElementById('mainScreen').style.display='block';
+    loadMenu();
+  }else alert('كلمة السر غلط');
+}
+function logout(){location.reload();}
+async function loadMenu(){
+  try{
+    const res=await fetch('index.html',{cache:'no-store'});
+    if(!res.ok) throw new Error('ما لقيت index.html');
+    TEMPLATE=await res.text();
+    let code=null;
+    const marker=TEMPLATE.match(/\/\*MENU_DATA_START\*\/([\s\S]*?)\/\*MENU_DATA_END\*\//);
+    if(marker){
+      const inner=marker[1];
+      const mm=inner.match(/const MENU_DATA\s*=\s*(\{[\s\S]*?\});/);
+      if(mm) code=mm[1];
+    }
+    if(!code){
+      const m=TEMPLATE.match(/const MENU_DATA\s*=\s*(\{[\s\S]*?\});/);
+      if(!m) throw new Error('ما قدرت اقرأ المينيو من index.html');
+      code=m[1];
+    }
+    DATA=eval('('+code+')');
+    const bm=TEMPLATE.match(/const BRANCHES\s*=\s*(\[[\s\S]*?\]);/);
+    if(bm){try{const parsed=eval('('+bm[1]+')'); BRANCHES=parsed.map(b=>({id:b.id,name:b.name,phone:b.phone,whatsapp:b.whatsapp,soon:false})); if(!BRANCHES.find(b=>b.id==='janah')) BRANCHES.push({id:'janah',name:'فرع الجناح',phone:'',whatsapp:'',soon:true});}catch(e){}}
+    document.getElementById('loading').style.display='none';
+    document.getElementById('tabs').style.display='flex';
+    document.getElementById('saveCard').style.display='block';
+    renderTabs(); render();
+  }catch(e){
+    DATA=JSON.parse(JSON.stringify(FALLBACK_MENU));
+    document.getElementById('loading').innerHTML='<div style="background:#fef3c7;border:1px solid #fde68a;border-radius:12px;padding:10px;font-size:13px">⚠️ ما قدرت اقرأ index.html، بس فيك تعدّل هون وتحط صور، وبعدين كبوس حفظ دغري.<br><small>'+e.message+'</small></div>';
+    document.getElementById('tabs').style.display='flex';
+    document.getElementById('saveCard').style.display='block';
+    renderTabs(); render();
+  }
+}
+const tabs=[{id:'items',label:'الأصناف'},{id:'categories',label:'الأقسام'},{id:'branches',label:'الفروع'},{id:'general',label:'عام و كلمة السر'}];
+function renderTabs(){document.getElementById('tabs').innerHTML=tabs.map(t=>`<button class="tab ${currentTab===t.id?'active':''}" onclick="switchTab('${t.id}')">${t.label}</button>`).join('');}
+function switchTab(id){currentTab=id;renderTabs();render();}
+function render(){
+  const el=document.getElementById('content');
+  if(!DATA) return;
+  if(currentTab==='items') renderItems(el);
+  else if(currentTab==='categories') renderCategories(el);
+  else if(currentTab==='branches') renderBranches(el);
+  else if(currentTab==='general') renderGeneral(el);
+}
+function renderItems(el){
+  let html=`<div class="card"><div class="row"><div><label>اختار القائمة</label><select onchange="currentMenu=this.value;render()"><option value="asroneyeh" ${currentMenu==='asroneyeh'?'selected':''}>كعكة العصرونية</option><option value="trablousieh" ${currentMenu==='trablousieh'?'selected':''}>كعكة الطرابلسية</option></select></div><div><label>زيد صنف جديد</label><button class="btn btn-orange" style="width:100%" onclick="addItem()">+ زيد صنف</button></div></div></div>`;
+  const menu=DATA[currentMenu];
+  menu.categories.forEach((cat,ci)=>{
+    html+=`<div class="card"><div style="display:flex;justify-content:space-between;align-items:center"><b>${cat.name} (${cat.items.length} صنف)</b><span class="badge">${menu.label}</span></div><div style="margin-top:10px">`;
+    cat.items.forEach((it,ii)=>{
+      const img=it.image||'';
+      html+=`<div class="item"><div style="display:flex;gap:10px;align-items:center">${img?`<img src="${img}" class="img-preview" onerror="this.style.display='none'">`:`<div class="img-preview">بدون<br>صورة</div>`}<div><b>${it.name} ${it.tag?`(${it.tag})`:''}</b><br><small style="color:#8a7a6a">${cat.name} • ${it.price} ل.ل. ${img?'• صورة موجودة':'• بدون صورة'}</small></div></div><div class="actions"><button style="background:#fff7f0" onclick="editItem(${ci},${ii})">تعديل</button><button style="background:#fee2e2" onclick="deleteItem(${ci},${ii})">حذف</button></div></div>`;
+    });
+    html+=`</div></div>`;
+  });
+  el.innerHTML=html;
+}
+let modalEdit=null, modalTempImage='';
+function editItem(ci,ii){
+  const cat=DATA[currentMenu].categories[ci]; const it=cat.items[ii];
+  modalEdit={ci,ii,isNew:false};
+  document.getElementById('itemModalTitle').textContent='تعديل: '+it.name;
+  document.getElementById('modalName').value=it.name||'';
+  document.getElementById('modalPrice').value=it.price||'';
+  document.getElementById('modalTag').value=it.tag||'';
+  modalTempImage=it.image||''; updateModalImagePreview();
+  document.getElementById('itemModal').classList.add('open');
+}
+function addItem(){
+  const catName=prompt('بأي قسم بدك تزيد؟ اكتب اسم القسم (مثلاً الأجبان):'); if(!catName) return;
+  modalEdit={isNew:true,catName};
+  document.getElementById('itemModalTitle').textContent='صنف جديد - '+catName;
+  document.getElementById('modalName').value=''; document.getElementById('modalPrice').value='100,000'; document.getElementById('modalTag').value='';
+  modalTempImage=''; updateModalImagePreview();
+  document.getElementById('itemModal').classList.add('open');
+}
+function closeItemModal(){document.getElementById('itemModal').classList.remove('open'); modalEdit=null;}
+function updateModalImagePreview(){
+  const img=document.getElementById('imgPreview'), empty=document.getElementById('imgEmpty');
+  if(modalTempImage){img.src=modalTempImage; img.style.display='block'; empty.style.display='none';}
+  else{img.src=''; img.style.display='none'; empty.style.display='block';}
+}
+function removeModalImage(){modalTempImage=''; updateModalImagePreview();}
+function onImagePicked(e){
+  const file=e.target.files[0]; if(!file) return;
+  const reader=new FileReader();
+  reader.onload=function(ev){
+    const img=new Image();
+    img.onload=function(){
+      const max=800; let w=img.width,h=img.height;
+      if(w>max){h=Math.round(h*max/w); w=max;}
+      if(h>max){w=Math.round(w*max/h); h=max;}
+      const canvas=document.createElement('canvas'); canvas.width=w; canvas.height=h;
+      canvas.getContext('2d').drawImage(img,0,0,w,h);
+      modalTempImage=canvas.toDataURL('image/jpeg',0.75);
+      updateModalImagePreview();
+    };
+    img.src=ev.target.result;
+  };
+  reader.readAsDataURL(file); e.target.value='';
+}
+function saveModalItem(){
+  const name=document.getElementById('modalName').value.trim();
+  const price=document.getElementById('modalPrice').value.trim();
+  const tag=document.getElementById('modalTag').value.trim();
+  if(!name){alert('اكتب اسم الصنف بالأول'); return;}
+  if(!price){alert('اكتب السعر'); return;}
+  if(modalEdit.isNew){
+    let cat=DATA[currentMenu].categories.find(c=>c.name===modalEdit.catName);
+    if(!cat){cat={name:modalEdit.catName,items:[]}; DATA[currentMenu].categories.push(cat);}
+    const it={name,price}; if(tag) it.tag=tag; if(modalTempImage) it.image=modalTempImage;
+    cat.items.push(it);
+  }else{
+    const it=DATA[currentMenu].categories[modalEdit.ci].items[modalEdit.ii];
+    it.name=name; it.price=price; it.tag=tag;
+    if(modalTempImage) it.image=modalTempImage; else delete it.image;
+  }
+  closeItemModal(); render();
+}
+function deleteItem(ci,ii){if(confirm('متأكد بدك تحذف هيدا الصنف؟')){DATA[currentMenu].categories[ci].items.splice(ii,1); render();}}
+function renderCategories(el){
+  let html=`<div class="card"><button class="btn btn-orange" onclick="addCategory()">+ زيد قسم جديد</button></div>`;
+  ['asroneyeh','trablousieh'].forEach(menuKey=>{
+    const menu=DATA[menuKey];
+    html+=`<div class="card"><b>${menu.label}</b>`;
+    menu.categories.forEach((cat,ci)=>{
+      html+=`<div class="item"><div><b>${cat.name}</b><br><small>${cat.items.length} صنف</small></div><div class="actions"><button style="background:#fff7f0" onclick="renameCategory('${menuKey}',${ci})">تعديل اسم</button><button style="background:#fee2e2" onclick="deleteCategory('${menuKey}',${ci})">حذف</button></div></div>`;
+    });
+    html+=`</div>`;
+  });
+  el.innerHTML=html;
+}
+function addCategory(){
+  const menuKey=prompt('بأي قائمة؟ اكتب asroneyeh للعصرونية أو trablousieh للطرابلسية:'); if(!menuKey || !DATA[menuKey]) return;
+  const name=prompt('اسم القسم الجديد:'); if(!name) return;
+  DATA[menuKey].categories.push({name,items:[]}); render();
+}
+function renameCategory(menuKey,ci){
+  const n=prompt('اسم جديد للقسم:',DATA[menuKey].categories[ci].name); if(n) DATA[menuKey].categories[ci].name=n; render();
+}
+function deleteCategory(menuKey,ci){if(confirm('متأكد بدك تحذف هيدا القسم وكل أصنافو؟')){DATA[menuKey].categories.splice(ci,1); render();}}
+function renderBranches(el){
+  let html=`<div class="card"><p style="font-size:13px;color:#8a7a6a">عدّل أسماء الفروع وأرقامهن، بعدين كبوس حفظ دغري.</p></div>`;
+  BRANCHES.forEach((b,idx)=>{
+    html+=`<div class="card"><b>${b.name} ${b.soon?'(قريباً)':''}</b><div class="row" style="margin-top:10px"><div><label>اسم الفرع</label><input value="${b.name}" onchange="BRANCHES[${idx}].name=this.value"></div><div><label>رقم الهاتف (بدون +961)</label><input value="${b.phone}" onchange="BRANCHES[${idx}].phone=this.value;BRANCHES[${idx}].whatsapp='961'+this.value"></div></div><label style="margin-top:10px"><input type="checkbox" ${b.soon?'checked':''} onchange="BRANCHES[${idx}].soon=this.checked" style="width:auto"> فرع قريباً - ما بيستقبل طلبات</label></div>`;
+  });
+  el.innerHTML=html;
+}
+function renderGeneral(el){
+  el.innerHTML=`
+  <div class="card"><b>تغيير كلمة السر</b><div style="margin-top:10px"><label>كلمة السر الجديدة</label><input id="newPass" type="password" placeholder="مثلا 5678"></div><button class="btn btn-orange" style="margin-top:10px" onclick="changePassword()">حفظ كلمة السر الجديدة</button></div>
+  <div class="card"><b>🚀 الحفظ الدغري على الموقع</b><p style="font-size:13px;color:#8a7a6a">حط التوكن مرة وحدة، بعدين كل تعديل بيتغير دغري عند الزبون.</p>
+  <div style="margin-top:10px"><label>اسم الحساب</label><input id="ghOwner" value="${GH.owner}"></div>
+  <div style="margin-top:10px"><label>اسم الريبو</label><input id="ghRepo" value="${GH.repo}"></div>
+  <div style="margin-top:10px"><label>الفرع</label><input id="ghBranch" value="${GH.branch}"></div>
+  <div style="margin-top:10px"><label>التوكن</label><input id="ghToken" type="password" value="${GH.token}" placeholder="ghp_..."></div>
+  <button class="btn btn-dark" style="margin-top:10px" onclick="saveGH()">حفظ إعداد الحفظ الدغري</button>
+  <button class="btn btn-white" style="margin-top:8px" onclick="testGH()">جرب الاتصال</button>
+  <div id="ghStatus" style="font-size:13px;margin-top:8px"></div></div>`;
+}
+function changePassword(){
+  const v=document.getElementById('newPass').value.trim();
+  if(!v || v.length<3){alert('اكتب كلمة سر 3 أحرف على الأقل'); return;}
+  localStorage.setItem('samadi_pass',v); alert('تم تغيير كلمة السر ✅
+كلمة السر الجديدة: '+v);
+}
+function saveGH(){
+  GH={owner:document.getElementById('ghOwner').value.trim(),repo:document.getElementById('ghRepo').value.trim(),branch:document.getElementById('ghBranch').value.trim()||'main',token:document.getElementById('ghToken').value.trim()};
+  localStorage.setItem('samadi_gh',JSON.stringify(GH));
+  document.getElementById('ghStatus').textContent='✅ انحفظت الإعدادات';
+}
+async function testGH(){
+  const st=document.getElementById('ghStatus'); st.textContent='عم جرب...';
+  try{
+    const r=await fetch(`https://api.github.com/repos/${GH.owner}/${GH.repo}/contents/index.html?ref=${GH.branch}`,{headers:{Authorization:'Bearer '+GH.token,Accept:'application/vnd.github+json'}});
+    if(!r.ok) throw new Error('ما زبط - تأكد من التوكن واسم الريبو');
+    st.textContent='✅ متصل! فيك تحفظ دغري هلق.';
+  }catch(e){st.textContent='❌ '+e.message;}
+}
+function buildNewIndexHtml(){
+  let html=TEMPLATE||'';
+  if(!html){
+    // If TEMPLATE is empty (fallback mode), fetch fresh index from server? Use current index-pro as base - for now, build from fallback by loading original file via fetch sync not possible, so use TEMPLATE from last load
+    alert('ما فيه قالب - افتح الإدارة من لينك الموقع، مش من الملف مباشرة.');
+    throw new Error('no template');
+  }
+  const menuRegex=/\/\*MENU_DATA_START\*\/[\s\S]*?\/\*MENU_DATA_END\*\/|const MENU_DATA\s*=\s*\{[\s\S]*?\};/;
+  const branchesRegex=/const BRANCHES\s*=\s*\[[\s\S]*?\];/;
+  const branchesForFile=BRANCHES.filter(b=>!b.soon).map(b=>({id:b.id,name:b.name,phone:b.phone,whatsapp:b.whatsapp}));
+  html=html.replace(menuRegex,`/*MENU_DATA_START*/
+const MENU_DATA=${JSON.stringify(DATA,null,2)};
+/*MENU_DATA_END*/`);
+  if(branchesRegex.test(html)) html=html.replace(branchesRegex,`const BRANCHES=${JSON.stringify(branchesForFile,null,2)};`);
+  return html;
+}
+function utf8ToBase64(s){return btoa(unescape(encodeURIComponent(s)));}
+function download(name,content){
+  const a=document.createElement('a'); a.href='data:text/html;charset=utf-8,'+encodeURIComponent(content); a.download=name; a.click();
+}
+async function saveDirectly(){
+  const st=document.getElementById('directSaveStatus');
+  if(!GH.token){alert('لازم تحط التوكن بالأول.
+
+فوت على "عام و كلمة السر" > "الحفظ الدغري" > حط التوكن واحفظو.'); switchTab('general'); return;}
+  if(!confirm('متأكد بدك تحفظ التعديلات دغري على الموقع؟
+المينيو رح يتغير عند الزباين بعد دقيقة.')) return;
+  st.textContent='عم بحفظ دغري على الموقع... لا تسكر الصفحة';
+  for(let attempt=1;attempt<=2;attempt++){
+    try{
+      const html=buildNewIndexHtml();
+      const getRes=await fetch(`https://api.github.com/repos/${GH.owner}/${GH.repo}/contents/index.html?ref=${GH.branch}&t=${Date.now()}`,{headers:{Authorization:'Bearer '+GH.token,Accept:'application/vnd.github+json'},cache:'no-store'});
+      if(!getRes.ok){const err=await getRes.json().catch(()=>({})); throw new Error('ما قدرت لاقي index.html: '+(err.message||getRes.status));}
+      const current=await getRes.json();
+      const putRes=await fetch(`https://api.github.com/repos/${GH.owner}/${GH.repo}/contents/index.html`,{method:'PUT',headers:{Authorization:'Bearer '+GH.token,Accept:'application/vnd.github+json','Content-Type':'application/json'},body:JSON.stringify({message:'تعديل من الإدارة - '+new Date().toLocaleString('ar-LB'),content:utf8ToBase64(html),sha:current.sha,branch:GH.branch})});
+      if(!putRes.ok){
+        const err=await putRes.json().catch(()=>({})); const msg=err.message||('خطأ '+putRes.status);
+        if(attempt===1 && (msg.includes('is at')||msg.toLowerCase().includes('sha')||msg.includes('expected'))){st.textContent='الملف تغيّر، عم جرب مرة تانية...'; await new Promise(r=>setTimeout(r,800)); continue;}
+        throw new Error(msg);
+      }
+      st.textContent='✅ تم! انحفظ دغري. استنى دقيقة وافتح المينيو من متصفح خفي.';
+      alert('تم! ✅
+
+انحفظ دغري على الموقع.
+استنى دقيقة وافتح المينيو من متصفح خفي.');
+      return;
+    }catch(e){
+      if(attempt===2){st.textContent='❌ ما زبط: '+e.message; alert('ما زبط الحفظ الدغري: '+e.message+'
+
+فيك تستخدم طريقة التنزيل القديمة تحت كبديل.');}
+    }
+  }
+}
+function exportMenu(){
+  const html=buildNewIndexHtml(); download('index.html',html);
+  alert('نزل عندك ملف index.html جديد
+
+هلق روح > المكان القديم > ارفع هيدا الملف محل القديم > استنى دقيقة > افتح الموقع من متصفح خفي');
+}
+document.getElementById('passInput').addEventListener('keydown',e=>{if(e.key==='Enter')doLogin();});
+</script>
+</body>
+</html>
